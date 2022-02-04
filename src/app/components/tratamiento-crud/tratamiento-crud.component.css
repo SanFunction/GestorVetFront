@@ -1,0 +1,16 @@
+button {
+    margin-bottom: 30px;
+  }
+  
+  .dialogCase {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem auto;
+    max-width: 600px;
+    padding: 1rem;
+    border-radius: 2px;
+  }
+  
+  .title {
+    text-align: center;
+  }

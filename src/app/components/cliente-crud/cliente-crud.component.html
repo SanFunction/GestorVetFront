@@ -1,0 +1,92 @@
+<div
+*ngIf="!mDelete">
+  <h1 *ngIf="mCreate" class="title" mat-dialog-title>Nuevo cliente</h1>
+  <h1 *ngIf="mUpdate" class="title"  mat-dialog-title>Editar cliente</h1>
+  <h1 *ngIf="mDetail" class="title"  mat-dialog-title>Resumen de datos</h1>
+
+  <div mat-dialog-content id="form">
+    <div class="dialogCase"
+      
+    >
+      <mat-form-field 
+      *ngIf="mUpdate || mDetail">
+        <input
+          matInput
+          [(ngModel)]="data.id"
+          type="number"
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.nombre"
+          type="text"
+          id="nombre"
+          placeholder="Nombre..."
+          [required]="mCreate"
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.descripcion"
+          id="descripcion"
+          type="text"
+          placeholder="Apellido"
+          [required]="mCreate"
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.telefono"
+          id="telefono"
+          type="text"
+          placeholder="Telefono"
+          [required]="mCreate"
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button mat-button (click) ="submit(data)" cdkFocusInitial>
+      Confirmar
+    </button>
+  </div>
+</div>
+
+
+<!-- borrado -->
+<div
+*ngIf="mDelete">
+  <h1 mat-dialog-title>Se va a confirmar el borrado de:</h1>
+  <div mat-dialog-content>
+    <div class="dialogCase"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.nombre + ' ' + data.descripcion"
+          type="text"
+          readonly
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
+      Confirmar
+    </button>
+  </div>
+</div>
+

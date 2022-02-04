@@ -1,0 +1,43 @@
+button {
+    margin-bottom: 30px;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-elevation-z4{
+
+    
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 80%;
+
+}
+
+.edit {
+    margin-right: 10px;
+    cursor: "pointer";
+}
+
+.edit > i {
+    color: #aa901d;
+    
+}
+
+.delete > i {
+    color: #7a212a;
+    
+}
+
+.detail> i {
+    color: #20704b;
+    
+}
+.detail {
+    margin-right: 10px;
+    cursor: "pointer";
+}
+.delete{
+    cursor: "pointer";
+}

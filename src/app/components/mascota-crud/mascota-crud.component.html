@@ -1,0 +1,86 @@
+<div
+*ngIf="!mDelete">
+  <h1 *ngIf="mCreate" class="title" mat-dialog-title>Nuevo mascota</h1>
+  <h1 *ngIf="mUpdate" class="title"  mat-dialog-title>Editar mascota</h1>
+  <h1 *ngIf="mDetail" class="title"  mat-dialog-title>Resumen de datos</h1>
+
+  <div mat-dialog-content>
+    <div class="dialogCase"
+      
+    >
+      <mat-form-field 
+      *ngIf="mUpdate || mDetail">
+        <input
+          matInput
+          [(ngModel)]="data.id"
+          type="number"
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.nombre"
+          type="text"
+          placeholder="Nombre..."
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.raza"
+          type="text"
+          placeholder="raza"
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.edad"
+          type="text"
+          placeholder="edad"
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
+      Confirmar
+    </button>
+  </div>
+</div>
+
+
+<!-- borrado -->
+<div
+*ngIf="mDelete">
+  <h1 mat-dialog-title>Se va a confirmar el borrado de:</h1>
+  <div mat-dialog-content>
+    <div class="dialogCase"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.nombre"
+          type="text"
+          readonly
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancelar()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
+      Confirmar
+    </button>
+  </div>
+</div>
+
