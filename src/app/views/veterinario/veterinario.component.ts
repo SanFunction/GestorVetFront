@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -38,21 +38,17 @@ export class VeterinarioComponent implements OnInit {
     this.editVet = {};
     this.nuevoVet = {};
     this.veterinarios = [
-      {
-        id: 1,
-        nombre: 'Ross',
-        apellidos: 'Gueller',
-      },
     ];
   }
 
   ngOnInit(): void {
-    this.veterinarioService.read().subscribe((vet) => {
-      this.veterinarios = vet;
-    });
-    // this.veterinarioService.getAllVet().subscribe((vet) => {
+    // this.veterinarioService.read().subscribe((vet) => {
+    //   console.log(vet)
     //   this.veterinarios = vet;
     // });
+    this.veterinarioService.getAllVet().subscribe((vet) => {
+      this.veterinarios = vet;
+    });
   }
 
   abrirDialogo() {

@@ -5,132 +5,177 @@ import { MascotaCrudComponent } from 'src/app/components/mascota-crud/mascota-cr
 
 import { HeaderService } from 'src/app/components/template/header/header.service';
 import { Mascota } from 'src/app/models/mascota.model';
+import { ClienteService } from 'src/app/services/cliente.service';
 import { MascotaService } from 'src/app/services/mascota.service';
+import { DiagnosticoService } from 'src/app/services/diagnostico.service';
 
 @Component({
   selector: 'app-mascota',
   templateUrl: './mascota.component.html',
-  styleUrls: ['./mascota.component.css']
+  styleUrls: ['./mascota.component.css'],
 })
 export class MascotaComponent implements OnInit {
-
- 
-  mascotas: Mascota[]
-  displayedColumns = ['id', 'nombre', 'raza','edad','action']
+  mascotas: Mascota[];
+  displayedColumns = ['id', 'nombre', 'especie', 'edad', 'historial', 'action'];
   nuevoMascota: Mascota;
   editMascota: Mascota;
   modal: string;
+  idCliente: any;
+  idMascota: any;
+  mascotasCliente: any;
+  public loading: boolean;
 
-  constructor(private tratamientoService: MascotaService,
-    private router: Router, 
+  constructor(
+    private diagnosticoService: DiagnosticoService,
+    private mascotaService: MascotaService,
+    private clienteService: ClienteService,
+    private router: Router,
     private headerService: HeaderService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog
+  ) {
     headerService.headerData = {
       title: 'Listado de mascota',
       icon: 'storefront',
-      routeUrl: '/mascota/:id'
+      routeUrl: '/mascota',
     };
 
-    this.modal = "";
-this.editMascota={};
-    this.nuevoMascota = {};
-    this.mascotas = [
-      {
-        id: 1,
-        nombre: "Mascota1",
-        raza:"felino",
-        edad: "2"
-      },
-    ];
-
+    this.modal = '';
+    this.editMascota = {};
+    this.nuevoMascota = {
+      nombre: '',
+      color: '',
+      edad: '',
+      foto: '',
+      peso: '',
+      raza: '',
+      especie: '',
+    };
+    this.mascotas = [];
+    this.loading = false;
   }
 
   ngOnInit(): void {
-    this.tratamientoService.read().subscribe(m => {
-      this.mascotas = m
-    })
-
-
-
-
+    console.log(this.nuevoMascota);
+    this.cargarList();
   }
 
-
-
   abrirDialogo() {
-    this.modal = "create";
-    sessionStorage.removeItem("modal");
-    sessionStorage.setItem("modal", this.modal);
-    this.modal = "";
+    this.modal = 'create';
+    sessionStorage.removeItem('modal');
+    sessionStorage.setItem('modal', this.modal);
+    this.modal = '';
 
     const dialogo1 = this.dialog.open(MascotaCrudComponent, {
-      data: (this.nuevoMascota = { }),
+      data: this.nuevoMascota,
     });
 
-    dialogo1.afterClosed().subscribe((vet) => {
-      console.log(vet);
-      if (vet != undefined) this.agregar(vet);
+    dialogo1.afterClosed().subscribe((mascota) => {
+      this.loading = true;
+      console.log('en principal', mascota);
+      try {
+        mascota.id = null;
+        this.mascotaService.create(mascota).subscribe(() => {
+          this.mascotaService.showMessage('Creado con éxito!');
+          this.router.navigate(['/mascota']);
+          this.cargarList();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     });
   }
 
   updateDialog(vet: Mascota) {
-    this.modal = "update";
-    sessionStorage.removeItem("modal");
-    sessionStorage.setItem("modal", this.modal);
-    this.modal = "";
+    this.modal = 'update';
+    sessionStorage.removeItem('modal');
+    sessionStorage.setItem('modal', this.modal);
+    this.modal = '';
     this.editMascota = vet;
 
     const dialogo1 = this.dialog.open(MascotaCrudComponent, {
-      data: (this.editMascota)
+      data: this.editMascota,
     });
 
-    dialogo1.afterClosed().subscribe((vet) => {
-      if (vet != undefined) this.update(vet);
+    dialogo1.afterClosed().subscribe((mascota) => {
+      this.loading = true;
+      try {
+        if (mascota) {
+          this.mascotaService.update(mascota).subscribe(() => {
+            this.clienteService.showMessage('Datos actualizados!');
+            this.router.navigate(['/mascota']);
+            this.cargarList();
+          });
+        } else {
+          this.cargarList();
+        }
+      } catch (error) {}
     });
   }
 
   detailDialog(vet: Mascota) {
-    this.modal = "detail";
-    sessionStorage.removeItem("modal");
-    sessionStorage.setItem("modal", this.modal);
-    this.modal = "";
+    this.modal = 'detail';
+    sessionStorage.removeItem('modal');
+    sessionStorage.setItem('modal', this.modal);
+    this.modal = '';
     this.editMascota = vet;
 
     const dialogo1 = this.dialog.open(MascotaCrudComponent, {
-      data: (this.editMascota)
+      data: this.editMascota,
     });
-
-  
   }
 
+  borrarFila(mascota: Mascota) {
+    this.modal = 'delete';
+    sessionStorage.removeItem('modal');
+    sessionStorage.setItem('modal', this.modal);
+    this.modal = '';
+    this.editMascota = mascota;
 
-  borrarFila(vet: Mascota) {
-    this.modal = "delete";
-    sessionStorage.removeItem("modal");
-    sessionStorage.setItem("modal", this.modal);
-    this.modal = "";
-    this.editMascota = vet;
-
-    console.log("valor recibido:", vet);
     const dialogo1 = this.dialog.open(MascotaCrudComponent, {
-      data: (this.editMascota)
+      data: this.editMascota,
     });
 
-    dialogo1.afterClosed().subscribe((vet) => {
-      this.mascotas.splice(vet.id, 1);
+    dialogo1.afterClosed().subscribe((mascota) => {
+      this.loading = true;
+      if (mascota) {
+        this.clienteService.delete(mascota.id).subscribe(() => {
+          this.clienteService.showMessage('Eliminado con exito');
+          this.router.navigate(['/mascota']);
+          this.cargarList();
+        });
+      } else {
+        console.log('niente');
+        this.cargarList();
+      }
     });
-
   }
 
-  agregar(vet: Mascota) {
-    this.mascotas.push(this.nuevoMascota);
+  cargarList() {
+    this.idCliente = sessionStorage.getItem('idCliente');
+    this.nuevoMascota.cliente = this.idCliente;
+
+    // this.mascotaService.readById(this.idCliente).subscribe(m => {
+    //   console.log(m)
+    //   this.mascotas = m
+    // })
+    this.clienteService.readById(this.idCliente).subscribe((cm) => {
+      let aux = cm.mascotas;
+
+      console.log(aux);
+
+      this.mascotasCliente = aux;
+    });
   }
 
-  update(vet: Mascota) {
-    this.mascotas.push(this.nuevoMascota);
+  navigateToDiagnosticoCrud(mascot: Mascota): void {
+    // this.idCliente = client.id.toString();
+    // sessionStorage.setItem("idCliente", ()!.toString());
+    // this.clienteService.readById(client.id).subscribe((cl) => {
+    //  console.log('peticion servicio',cl)
+    // });
+    this.idMascota = mascot.id!.toString();
+    sessionStorage.setItem('idMascota', this.idMascota);
+
+    this.router.navigate(['/diagnostico']);
   }
-
-
-
-
-}
+} //class

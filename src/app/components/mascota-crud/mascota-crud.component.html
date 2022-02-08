@@ -1,15 +1,11 @@
-<div
-*ngIf="!mDelete">
+<div *ngIf="!mDelete">
   <h1 *ngIf="mCreate" class="title" mat-dialog-title>Nuevo mascota</h1>
-  <h1 *ngIf="mUpdate" class="title"  mat-dialog-title>Editar mascota</h1>
-  <h1 *ngIf="mDetail" class="title"  mat-dialog-title>Resumen de datos</h1>
+  <h1 *ngIf="mUpdate" class="title" mat-dialog-title>Editar mascota</h1>
+  <h1 *ngIf="mDetail" class="title" mat-dialog-title>Resumen de datos</h1>
 
   <div mat-dialog-content>
-    <div class="dialogCase"
-      
-    >
-      <mat-form-field 
-      *ngIf="mUpdate || mDetail">
+    <div class="dialogCase">
+      <mat-form-field *ngIf="mUpdate || mDetail">
         <input
           matInput
           [(ngModel)]="data.id"
@@ -23,8 +19,32 @@
           matInput
           [(ngModel)]="data.nombre"
           type="text"
+          id="nombre"
           placeholder="Nombre..."
           [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Especie</mat-label>
+
+        <mat-select
+          *ngIf="mCreate || mUpdate"
+          [(ngModel)]="selectedValue"
+          name="especie"
+          id="especie"
+        >
+          <mat-option *ngFor="let es of especie" [value]="es.nombre">
+            {{ es.nombre }}
+          </mat-option>
+        </mat-select>
+
+        <input
+          *ngIf="mDetail"
+          matInput
+          [(ngModel)]="data.especie"
+          type="text"
+          readonly
         />
       </mat-form-field>
 
@@ -32,8 +52,20 @@
         <input
           matInput
           [(ngModel)]="data.raza"
+          id="raza"
           type="text"
-          placeholder="raza"
+          placeholder="Raza..."
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.color"
+          id="color"
+          type="text"
+          placeholder="Color..."
           [readonly]="mDetail"
         />
       </mat-form-field>
@@ -42,37 +74,38 @@
         <input
           matInput
           [(ngModel)]="data.edad"
+          id="edad"
           type="text"
-          placeholder="edad"
+          placeholder="Edad..."
           [readonly]="mDetail"
         />
       </mat-form-field>
 
+      <mat-form-field>
+        <input
+          matInput
+          [(ngModel)]="data.peso"
+          id="peso"
+          type="text"
+          placeholder="Peso..."
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
     </div>
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="cancelar()">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
-      Confirmar
-    </button>
+    <button mat-button (click)="submit(data)" cdkFocusInitial>Confirmar</button>
   </div>
 </div>
 
-
 <!-- borrado -->
-<div
-*ngIf="mDelete">
+<div *ngIf="mDelete">
   <h1 mat-dialog-title>Se va a confirmar el borrado de:</h1>
   <div mat-dialog-content>
-    <div class="dialogCase"
-    >
+    <div class="dialogCase">
       <mat-form-field>
-        <input
-          matInput
-          [(ngModel)]="data.nombre"
-          type="text"
-          readonly
-        />
+        <input matInput [(ngModel)]="data.nombre" type="text" readonly />
       </mat-form-field>
     </div>
   </div>
@@ -83,4 +116,3 @@
     </button>
   </div>
 </div>
-

@@ -11,7 +11,9 @@ table {
     
     padding-left: 20px;
     padding-right: 20px;
-    width: 80%;
+    width: 95%;
+    margin-top: 40px;
+    margin-bottom: 60px;
 
 }
 
@@ -41,3 +43,18 @@ table {
 .delete{
     cursor: "pointer";
 }
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    width: 98.3%;
+  }
+
+  .loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+  

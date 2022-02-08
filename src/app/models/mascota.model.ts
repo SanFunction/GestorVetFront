@@ -13,6 +13,6 @@ export interface Mascota{
     raza?:string
     especie?:string
     diagnostico?:Diagnostico
-    propietario?: Cliente
+    cliente?: Cliente
 
 }

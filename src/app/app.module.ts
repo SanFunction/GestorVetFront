@@ -20,7 +20,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from  '@angular/common';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -32,7 +32,7 @@ import { NavComponent } from './components/template/nav/nav.component';
 import { HomeComponent } from './views/home/home.component';
 
 import { from } from 'rxjs';
-
+import {MatSelectModule} from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import {MatDatepickerModule} from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
@@ -101,7 +101,9 @@ registerLocaleData(localePt);
     MatNativeDateModule,
     MatSortModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule,
+    MatSelectModule
     // CalendarModule
   ],
   providers: [{

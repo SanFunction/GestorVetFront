@@ -1,8 +1,15 @@
-<div>
-    <button mat-raised-button (click)="abrirDialogo()"
-  color="primary">
-  Nuevo tratamiento
-  </button> 
+<div class="flex-container">
+  <div id="Mes"></div>
+</div>
+
+
+  <div class="flex-container">
+    <div id="navButton"></div>
+    <div>
+      <button mat-raised-button (click)="abrirDialogo()" color="primary">
+        Nuevo tratamiento
+      </button>
+    </div>
   </div>
   <div class="mat-elevation-z4">
       <table mat-table [dataSource]="tratamientos">

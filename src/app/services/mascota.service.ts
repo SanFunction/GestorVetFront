@@ -1,24 +1,25 @@
-import { Injectable } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { HttpClient } from "@angular/common/http";
-import { Mascota } from "../models/mascota.model";
-import { Observable, EMPTY } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
+import { Mascota } from '../models/mascota.model';
+import { Observable, EMPTY } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class MascotaService {
-  baseUrl = "http://localhost:8080/mascota";
+  baseUrl = 'http://localhost:8080/mascota';
+  baseUrl2 = 'http://localhost:8080/mascota/diagnostico';
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 
   showMessage(msg: string, isError: boolean = false): void {
-    this.snackBar.open(msg, "X", {
+    this.snackBar.open(msg, 'X', {
       duration: 3000,
-      horizontalPosition: "right",
-      verticalPosition: "top",
-      panelClass: isError ? ["msg-error"] : ["msg-success"],
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: isError ? ['msg-error'] : ['msg-success'],
     });
   }
 
@@ -44,6 +45,16 @@ export class MascotaService {
     );
   }
 
+  diagnosticoById(id: any): Observable<Mascota> {
+    const url = `${this.baseUrl2}/${id}`;
+    return this.http.get<Mascota>(url).pipe(
+      map((obj) => obj),
+      catchError((e) => this.errorHandler(e))
+    );
+  }
+
+
+
   update(mascota: Mascota): Observable<Mascota> {
     const url = `${this.baseUrl}/${mascota.id}`;
     return this.http.put<Mascota>(url, mascota).pipe(
@@ -61,7 +72,7 @@ export class MascotaService {
   }
 
   errorHandler(e: any): Observable<any> {
-    this.showMessage("Ocurrio un error", true);
+    this.showMessage('Ocurrio un error', true);
     return EMPTY;
   }
 }

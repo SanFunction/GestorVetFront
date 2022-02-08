@@ -8,6 +8,7 @@ import { ClienteComponent } from "./views/cliente/cliente.component";
 import { MascotaComponent } from "./views/mascota/mascota.component";
 import { TratamientoComponent } from "./views/tratamiento/tratamiento.component";
 import { DiagnosticoComponent } from "./views/diagnostico/diagnostico.component";
+import { VeterinarioComponent } from "./views/veterinario/veterinario.component";
 
 
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: "veterinario",
-    component: ClienteComponent
+    component: VeterinarioComponent
   },
   {
     path: "diagnostico",
