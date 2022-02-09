@@ -47,6 +47,7 @@ export class VeterinarioComponent implements OnInit {
     //   this.veterinarios = vet;
     // });
     this.veterinarioService.getAllVet().subscribe((vet) => {
+      console.log(vet)
       this.veterinarios = vet;
     });
   }
@@ -62,7 +63,7 @@ export class VeterinarioComponent implements OnInit {
         // id: null,
         nombre: '',
         apellidos: '',
-        diagnosticos: null,
+        diagnostico: null,
       }),
     });
 

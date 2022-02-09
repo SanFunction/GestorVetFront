@@ -9,12 +9,13 @@
       
     >
       <mat-form-field 
-      *ngIf="mUpdate || mDetail">
+      *ngIf="mDetail">
         <input
           matInput
           [(ngModel)]="data.id"
           type="number"
-          [readonly]="mDetail"
+          placeholder="Código..."
+         
         />
       </mat-form-field>
 

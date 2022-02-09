@@ -62,4 +62,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      <div class="footer" #footer>
+        <div class="p-d-flex p-ai-center p-jc-between">
+          En total hay {{ mascotasCliente ? longitud : 0 }} {{ longitud === 1 ? "elemento" : "elementos" }}
+        </div>
+      </div>
     </div>

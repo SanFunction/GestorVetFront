@@ -23,7 +23,8 @@ export class MascotaComponent implements OnInit {
   idCliente: any;
   idMascota: any;
   mascotasCliente: any;
-  public loading: boolean;
+  loading: boolean;
+  longitud: number;
 
   constructor(
     private diagnosticoService: DiagnosticoService,
@@ -52,10 +53,10 @@ export class MascotaComponent implements OnInit {
     };
     this.mascotas = [];
     this.loading = false;
+    this.longitud=0;
   }
 
   ngOnInit(): void {
-    console.log(this.nuevoMascota);
     this.cargarList();
   }
 
@@ -80,7 +81,6 @@ export class MascotaComponent implements OnInit {
           this.cargarList();
         });
       } catch (error) {
-        console.log(error);
       }
     });
   }
@@ -154,16 +154,10 @@ export class MascotaComponent implements OnInit {
     this.idCliente = sessionStorage.getItem('idCliente');
     this.nuevoMascota.cliente = this.idCliente;
 
-    // this.mascotaService.readById(this.idCliente).subscribe(m => {
-    //   console.log(m)
-    //   this.mascotas = m
-    // })
     this.clienteService.readById(this.idCliente).subscribe((cm) => {
       let aux = cm.mascotas;
-
-      console.log(aux);
-
       this.mascotasCliente = aux;
+      this.longitud = (Object.keys(this.mascotasCliente).length)
     });
   }
 

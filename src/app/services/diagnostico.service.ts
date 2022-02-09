@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Diagnostico } from '../models/diagnostico.model';
+import { Veterinario } from '../models/veterinario.model';
 
 
 @Injectable({
@@ -12,6 +13,7 @@ import { Diagnostico } from '../models/diagnostico.model';
 export class DiagnosticoService {
   baseUrl = "http://localhost:8080/diagnostico";
 
+  baseUrl2 = "http://localhost:8080/diagnostico/veterinario";
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 
@@ -26,6 +28,14 @@ export class DiagnosticoService {
 
   create(diagnostico: Diagnostico): Observable<Diagnostico> {
     return this.http.post<Diagnostico>(this.baseUrl, diagnostico).pipe(
+      map((obj) => obj),
+      catchError((e) => this.errorHandler(e))
+    );
+  }
+
+  getVetporIdDiagnostico(id:any):Observable<Veterinario>{
+    const url2 = `${this.baseUrl2}/${id}`;
+    return this.http.get<Veterinario>(url2).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );

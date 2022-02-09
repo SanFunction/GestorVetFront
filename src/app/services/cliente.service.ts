@@ -23,7 +23,6 @@ export class ClienteService {
   }
 
   create(cliente: Cliente): Observable<Cliente> {
-    console.log('client servicio:', cliente);
     return this.http.post<Cliente>(this.baseUrl, cliente).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))

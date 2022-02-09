@@ -16,14 +16,7 @@ import { ClienteCrudComponent } from 'src/app/components/cliente-crud/cliente-cr
 })
 export class ClienteComponent implements OnInit {
   clientes: Cliente[];
-  displayedColumns = [
-    'id',
-    'nombre',
-    'apellidos',
-    'telefono',
-    'mascotas',
-    'action',
-  ];
+  displayedColumns = ['nombre', 'apellidos', 'telefono', 'mascotas', 'action'];
   nuevoCliente: Cliente;
   editCliente: Cliente;
   modal: string;
@@ -109,7 +102,7 @@ export class ClienteComponent implements OnInit {
             this.router.navigate(['/cliente']);
             this.cargarList();
           });
-        }else {
+        } else {
           this.cargarList();
         }
       } catch (error) {}
@@ -148,7 +141,6 @@ export class ClienteComponent implements OnInit {
           this.cargarList();
         });
       } else {
-        console.log('niente');
         this.cargarList();
       }
     });
@@ -157,7 +149,6 @@ export class ClienteComponent implements OnInit {
   cargarList() {
     this.clienteService.read().subscribe((cl) => {
       this.clientes = cl;
-      console.log('list',cl)
       this.loading = false;
     });
   }

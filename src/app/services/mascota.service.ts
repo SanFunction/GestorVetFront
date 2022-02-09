@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Mascota } from '../models/mascota.model';
 import { Observable, EMPTY } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Diagnostico } from '../models/diagnostico.model';
 
 @Injectable({
   providedIn: 'root',
@@ -45,9 +46,9 @@ export class MascotaService {
     );
   }
 
-  diagnosticoById(id: any): Observable<Mascota> {
+  diagnosticoById(id: any): Observable<Diagnostico[]> {
     const url = `${this.baseUrl2}/${id}`;
-    return this.http.get<Mascota>(url).pipe(
+    return this.http.get<Diagnostico>(url).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );

@@ -14,11 +14,12 @@ import { TratamientoCrudComponent } from 'src/app/components/tratamiento-crud/tr
 })
 export class TratamientoComponent implements OnInit {
   tratamientos: Tratamiento[];
-  displayedColumns = ['id', 'detalle', 'precio', 'action'];
+  displayedColumns = ['detalle', 'precio', 'action'];
   nuevoTratamiento: Tratamiento;
   editTratamiento: Tratamiento;
   modal: string;
   idTratamiento: string;
+  loading: boolean;
 
   constructor(
     private tratamientoService: TratamientoService,
@@ -37,12 +38,11 @@ export class TratamientoComponent implements OnInit {
     this.editTratamiento = {};
     this.idTratamiento = '';
     this.nuevoTratamiento = {};
+    this.loading = false;
   }
 
   ngOnInit(): void {
-    this.tratamientoService.read().subscribe((dg) => {
-      this.tratamientos = dg;
-    });
+    this.cargarList();
   }
 
   abrirDialogo() {
@@ -54,14 +54,30 @@ export class TratamientoComponent implements OnInit {
     const dialogo1 = this.dialog.open(TratamientoCrudComponent, {
       data: (this.nuevoTratamiento = { 
         // id: null,
-         detalle: '', precio: '' }),
+         detalle: '', 
+         precio: '',
+        }),
     });
 
     dialogo1.afterClosed().subscribe((tratam) => {
-      this.tratamientoService.create(tratam).subscribe(() => {
-        this.tratamientoService.showMessage('Creado con éxito!');
-        this.router.navigate(['/tratamiento']);
-      });
+      this.loading = true;
+
+      try {
+        if (tratam) {
+          this.tratamientoService.create(tratam).subscribe(() => {
+            this.tratamientoService.showMessage('Creado con éxito!');
+            this.router.navigate(['/tratamiento']);
+          });
+        } else {
+          this.cargarList();
+        }
+      } catch (error) {
+        
+      }
+
+
+
+
     });
   }
 
@@ -77,12 +93,23 @@ export class TratamientoComponent implements OnInit {
     });
 
     dialogo1.afterClosed().subscribe((tratam) => {
-      if (tratam) {
-        this.tratamientoService.update(tratam).subscribe(() => {
-          this.tratamientoService.showMessage('Datos actualizados!');
-          this.router.navigate(['/tratamiento']);
-        });
+      this.loading = true;
+
+      try {
+        if (tratam) {
+          this.tratamientoService.update(tratam).subscribe(() => {
+            this.tratamientoService.showMessage('Datos actualizados!');
+            this.router.navigate(['/tratamiento']);
+          });
+        } else {
+          this.cargarList();
+        }
+      } catch (error) {
+        
       }
+
+
+      
     });
   }
 
@@ -111,12 +138,26 @@ export class TratamientoComponent implements OnInit {
     });
 
     dialogo1.afterClosed().subscribe((tratam) => {
+      this.loading = true;
       if (tratam) {
         this.tratamientoService.delete(tratam.id).subscribe(() => {
           this.tratamientoService.showMessage('Eliminado con exito');
           this.router.navigate(['/tratamiento']);
         });
+      }else {
+        this.cargarList();
       }
     });
   }
-}
+
+
+ cargarList(){
+  this.tratamientoService.read().subscribe((dg) => {
+    this.tratamientos = dg;
+    this.loading = false;
+  });
+  
+ }
+
+
+} //

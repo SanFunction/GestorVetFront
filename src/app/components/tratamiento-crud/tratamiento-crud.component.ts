@@ -19,10 +19,15 @@ export class TratamientoCrudComponent implements OnInit {
   valorModal: any;
 
 
+
+
   constructor(
     private tratamientoService: TratamientoService,
     public dialogRef: MatDialogRef<TratamientoCrudComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Tratamiento) { 
+
+      
+
 
       this.valorModal = sessionStorage.getItem("modal");
       this.data= {...data};

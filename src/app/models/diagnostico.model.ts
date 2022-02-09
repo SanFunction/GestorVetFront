@@ -7,10 +7,10 @@ export interface Diagnostico {
     id?: number
     enfermedad?: string
     estado?: string
-    fecha?: Date | string
+    fecha?: any
     mascota?: Mascota[]
     tratamiento?: String
-    veterinario?: any
+    veterinario?: Veterinario
 
 
 
