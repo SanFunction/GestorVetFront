@@ -16,7 +16,7 @@ import { DiagnosticoService } from 'src/app/services/diagnostico.service';
 })
 export class MascotaComponent implements OnInit {
   mascotas: Mascota[];
-  displayedColumns = ['id', 'nombre', 'especie', 'edad', 'historial', 'action'];
+  displayedColumns = ['nombre', 'especie', 'edad', 'historial', 'action'];
   nuevoMascota: Mascota;
   editMascota: Mascota;
   modal: string;
@@ -35,7 +35,7 @@ export class MascotaComponent implements OnInit {
     public dialog: MatDialog
   ) {
     headerService.headerData = {
-      title: 'Listado de mascota',
+      title: 'Mascotas de cliente',
       icon: 'storefront',
       routeUrl: '/mascota',
     };
@@ -52,8 +52,8 @@ export class MascotaComponent implements OnInit {
       especie: '',
     };
     this.mascotas = [];
-    this.loading = false;
-    this.longitud=0;
+    this.loading = true;
+    this.longitud = 0;
   }
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class MascotaComponent implements OnInit {
 
     dialogo1.afterClosed().subscribe((mascota) => {
       this.loading = true;
-      console.log('en principal', mascota);
+    
       try {
         mascota.id = null;
         this.mascotaService.create(mascota).subscribe(() => {
@@ -80,8 +80,7 @@ export class MascotaComponent implements OnInit {
           this.router.navigate(['/mascota']);
           this.cargarList();
         });
-      } catch (error) {
-      }
+      } catch (error) {}
     });
   }
 
@@ -97,11 +96,12 @@ export class MascotaComponent implements OnInit {
     });
 
     dialogo1.afterClosed().subscribe((mascota) => {
+     
       this.loading = true;
       try {
         if (mascota) {
           this.mascotaService.update(mascota).subscribe(() => {
-            this.clienteService.showMessage('Datos actualizados!');
+            this.mascotaService.showMessage('Datos actualizados!');
             this.router.navigate(['/mascota']);
             this.cargarList();
           });
@@ -138,26 +138,27 @@ export class MascotaComponent implements OnInit {
     dialogo1.afterClosed().subscribe((mascota) => {
       this.loading = true;
       if (mascota) {
-        this.clienteService.delete(mascota.id).subscribe(() => {
-          this.clienteService.showMessage('Eliminado con exito');
+        this.mascotaService.delete(mascota.id).subscribe(() => {
+          this.mascotaService.showMessage('Eliminado con exito');
           this.router.navigate(['/mascota']);
           this.cargarList();
         });
       } else {
-        console.log('niente');
         this.cargarList();
       }
     });
   }
 
   cargarList() {
+  
     this.idCliente = sessionStorage.getItem('idCliente');
     this.nuevoMascota.cliente = this.idCliente;
 
     this.clienteService.readById(this.idCliente).subscribe((cm) => {
       let aux = cm.mascotas;
       this.mascotasCliente = aux;
-      this.longitud = (Object.keys(this.mascotasCliente).length)
+      this.longitud = Object.keys(this.mascotasCliente).length;
+      this.loading = false;
     });
   }
 

@@ -107,7 +107,7 @@ export class CalendarComponent extends UnsubscribeOnDestroy() implements AfterVi
     this.configMonth.visible = true;
   }
 
-//   var d = new Date('2015-03-04T00:00:00.000Z');
+// let d:any = new Date('2015-03-04T00:00:00.000Z');
 // console.log(d.getUTCHours()); // Hours
 // console.log(d.getUTCMinutes());
 // console.log(d.getUTCSeconds());

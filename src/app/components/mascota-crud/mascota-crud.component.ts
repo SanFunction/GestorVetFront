@@ -19,6 +19,8 @@ export class MascotaCrudComponent implements OnInit {
   selectedValue: string ='';
   valorModal: any;
   especie: Especie[];
+  idCliente: number;
+  longitud: any;
 
   constructor(
     private especieService: EspecieService,
@@ -34,6 +36,9 @@ export class MascotaCrudComponent implements OnInit {
     this.data = { ...data };
     this.especie=[];
     this.comboEspecie();
+    this.idCliente = Number(this.data.cliente)
+    this.longitud =(this.data.diagnostico)
+   
   }
 
   ngOnInit(): void {
@@ -66,6 +71,8 @@ export class MascotaCrudComponent implements OnInit {
         this.mDetail = true;
         break;
     }
+
+ 
   }
 
 
@@ -74,10 +81,7 @@ export class MascotaCrudComponent implements OnInit {
     .getAllEsp()
     .pipe(take(1))
     .subscribe((data) => {
-      console.log('data:',data)
       this.especie = data;
-      console.log('especie:',this.especie)
-      // this.loading = false
     });
 
   }
@@ -120,6 +124,7 @@ export class MascotaCrudComponent implements OnInit {
 
   submit(data: Mascota) {
     data.especie = this.selectedValue;
+    data.cliente ={id: this.idCliente}
 
     if (this.validar(data)) {
       this.dialogRef.close(data);

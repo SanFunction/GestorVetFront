@@ -3,7 +3,7 @@
 </div>
 
 
-  <div class="flex-container">
+  <div class="flex-container" >
     <div id="navButton"></div>
     <div>
       <button mat-raised-button (click)="abrirDialogo()" color="primary">
@@ -67,4 +67,8 @@
           En total hay {{ mascotasCliente ? longitud : 0 }} {{ longitud === 1 ? "elemento" : "elementos" }}
         </div>
       </div>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <mat-spinner></mat-spinner>
     </div>

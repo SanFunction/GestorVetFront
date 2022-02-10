@@ -21,7 +21,7 @@ export class ClienteComponent implements OnInit {
   editCliente: Cliente;
   modal: string;
   // idCliente: string;
-  public loading: boolean;
+  loading: boolean;
 
   constructor(
     private clienteService: ClienteService,
@@ -36,7 +36,7 @@ export class ClienteComponent implements OnInit {
     };
 
     this.modal = '';
-    this.loading = false;
+    this.loading = true;
     this.nuevoCliente = {
       // id:null,
       nombre: '',
@@ -147,6 +147,7 @@ export class ClienteComponent implements OnInit {
   }
 
   cargarList() {
+
     this.clienteService.read().subscribe((cl) => {
       this.clientes = cl;
       this.loading = false;
