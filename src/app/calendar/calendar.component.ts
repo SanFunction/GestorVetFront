@@ -52,7 +52,7 @@ export class CalendarComponent extends UnsubscribeOnDestroy() implements AfterVi
   configWeek: DayPilot.CalendarConfig = {
     viewType: "Week",
     onTimeRangeSelected: async (args) => {
-      const modal = await DayPilot.Modal.prompt("Create a new event:", "Event 1");
+      const modal = await DayPilot.Modal.prompt("Añadir nueva cita:", "Cita");
       const dp = args.control;
       dp.clearSelection();
       if (!modal.result) { return; }
@@ -82,6 +82,7 @@ export class CalendarComponent extends UnsubscribeOnDestroy() implements AfterVi
     const from = this.nav.control.visibleStart();
     const to = this.nav.control.visibleEnd();
     this.ds.getEvents(from, to).subscribe(result => {
+      console.log('resultado:',result)
       this.events = result;
     });
   }
