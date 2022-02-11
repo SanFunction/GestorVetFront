@@ -101,8 +101,15 @@ export class CalendarComponent
             let mes = cita['fecha']?.substring(5, 7);
             let dia = cita['fecha']?.substring(8, 10);
             let hora = cita['fecha']?.substring(11, 13);
-            let text = cita['anotaciones'];
 
+            let mascota = cita['anotaciones'];
+
+            let cliente = cita.cliente;
+
+            let nombre = `${cita.cliente['nombre']} ${cita.cliente['descripcion']}  `;
+
+            let text = `Cliente: ${nombre}\nMascota: ${mascota}\n`;
+            
             let start = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(hora);
             let end = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(Number(hora)+1);
 
@@ -111,11 +118,11 @@ export class CalendarComponent
               end: end,
               id: id,
               text: text,
+              cliente: cliente,
             });
           });
 
           console.log(this.events);
-          // this.events = this.events3;
 
         })
       )

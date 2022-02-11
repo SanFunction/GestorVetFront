@@ -53,6 +53,7 @@ import { VeterinarioCreateComponent } from './components/veterinario-create/vete
 import { TratamientoCrudComponent } from './components/tratamiento-crud/tratamiento-crud.component';
 import { DiagnosticoCrudComponent } from './components/diagnostico-crud/diagnostico-crud.component';
 import { VeterinarioComponent } from './views/veterinario/veterinario.component';
+import { PruebaComponent } from './components/prueba/prueba.component';
 
 
 
@@ -76,7 +77,8 @@ registerLocaleData(localePt);
     MascotaCrudComponent,
     VeterinarioCreateComponent,
     TratamientoCrudComponent,
-    DiagnosticoCrudComponent
+    DiagnosticoCrudComponent,
+    PruebaComponent
 
   ],
   imports: [
