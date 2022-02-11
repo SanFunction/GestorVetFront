@@ -103,9 +103,7 @@ export class CalendarComponent
             let hora = cita['fecha']?.substring(11, 13);
             let text = cita['anotaciones'];
 
-            let start = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(
-              hora
-            );
+            let start = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(hora);
             let end = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(Number(hora)+1);
 
             this.events.push({
