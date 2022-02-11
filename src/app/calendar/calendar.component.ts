@@ -7,7 +7,6 @@ import {
 } from '@daypilot/daypilot-lite-angular';
 import { DataService } from './data.service';
 import { UnsubscribeOnDestroy } from '../shared/classes/unsubscribe-on-destroy.class';
-import { CitaService } from '../services/citas.service';
 import { take, tap } from 'rxjs';
 
 @Component({
@@ -24,15 +23,11 @@ export class CalendarComponent
   @ViewChild('month') month!: DayPilotMonthComponent;
   @ViewChild('navigator') nav!: DayPilotNavigatorComponent;
 
-  events: DayPilot.EventData[] = [];
-  // events: any[] = [];
-
-  events2: any[] = [];
-
-  events3: any[] = [];
+  // events: DayPilot.EventData[] = [];
+  events: any[] = [];
+  evento: DayPilot.EventData = {};
 
   date = DayPilot.Date.today();
-
 
   configNavigator: DayPilot.NavigatorConfig = {
     showMonths: 3,
@@ -77,7 +72,9 @@ export class CalendarComponent
 
   configMonth: DayPilot.MonthConfig = {};
 
-  constructor(private citaService: CitaService, private ds: DataService) {
+  constructor(
+    private ds: DataService) {
+
     super();
     this.viewWeek();
   }
@@ -92,54 +89,39 @@ export class CalendarComponent
 
     this.ds.getEvents(from, to).subscribe((result) => {
       this.events = result;
-      console.log('pre', this.events);
     });
-
-    // ****
-    // Este codigo es el que tras cargarse eventos moqueados, 
-    // te trae la lista del back de citas y cambia el formato al que tiene
-    //eventos y añado citas, pero se queda congelado el navegador y bloquea todo
-    // cosa que con los datos moqeuados no pasa
-    // ****
-
 
     this.ds
       .read(from, to)
       .pipe(
         tap((result) => {
-
-            result.forEach((cita) => {
+          result.forEach((cita) => {
             let id = cita.id;
-
-            console.log('todos tienen id', cita.id);
-
             let anio = cita['fecha']?.substring(0, 4);
             let mes = cita['fecha']?.substring(5, 7);
             let dia = cita['fecha']?.substring(8, 10);
             let hora = cita['fecha']?.substring(11, 13);
             let text = cita['anotaciones'];
 
-            // this.events.push({
-            this.events.push({
-              id: id,
-              start: DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(
-               hora
-              ),
-              end: DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(
+            let start = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(
               hora
-              ),
+            );
+            let end = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(Number(hora)+1);
+
+            this.events.push({
+              start: start,
+              end: end,
+              id: id,
               text: text,
-              
             });
           });
 
-          console.log(this.events3);
+          console.log(this.events);
           // this.events = this.events3;
+
         })
       )
       .subscribe(); // fin servicio
-
-   
   }
 
   viewDay(): void {
@@ -162,6 +144,9 @@ export class CalendarComponent
     this.configWeek.visible = false;
     this.configMonth.visible = true;
   }
+
+
+  
 
   // let d:any = new Date('2015-03-04T00:00:00.000Z');
   // console.log(d.getUTCHours()); // Hours

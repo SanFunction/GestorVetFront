@@ -29,12 +29,12 @@ export class DataService {
     //   end: DayPilot.Date.today().addHours(12),
     //   text: "Cita 2"
     // },
-    {
-      id:3,
-      start: DayPilot.Date.fromYearMonthDay(2022,2,12).addHours(9),
-      end:DayPilot.Date.fromYearMonthDay(2022,2,12).addHours(10),
-      text:"Cita 3"
-    }
+    // {
+    //   id:3,
+    //   start: DayPilot.Date.fromYearMonthDay(2022,2,12).addHours(9),
+    //   end:DayPilot.Date.fromYearMonthDay(2022,2,12).addHours(10),
+    //   text:"Cita 3"
+    // }
   ];
 
 
