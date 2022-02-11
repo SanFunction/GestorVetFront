@@ -31,3 +31,10 @@
       background-color: #5a9216;
     }
 
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      padding: 1rem;
+    }

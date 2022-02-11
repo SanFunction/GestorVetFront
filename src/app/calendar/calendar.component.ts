@@ -1,39 +1,46 @@
-import {Component, ViewChild, AfterViewInit, OnDestroy} from "@angular/core";
+import { Component, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import {
   DayPilot,
   DayPilotCalendarComponent,
   DayPilotMonthComponent,
-  DayPilotNavigatorComponent
-} from "@daypilot/daypilot-lite-angular";
-import {DataService} from "./data.service";
-import { UnsubscribeOnDestroy } from "../shared/classes/unsubscribe-on-destroy.class";
+  DayPilotNavigatorComponent,
+} from '@daypilot/daypilot-lite-angular';
+import { DataService } from './data.service';
+import { UnsubscribeOnDestroy } from '../shared/classes/unsubscribe-on-destroy.class';
+import { CitaService } from '../services/citas.service';
+import { take, tap } from 'rxjs';
 
 @Component({
   selector: 'calendar-component',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css'],
 })
-export class CalendarComponent extends UnsubscribeOnDestroy() implements AfterViewInit {
-
-
-  
-
-  @ViewChild("day") day!: DayPilotCalendarComponent;
-  @ViewChild("week") week!: DayPilotCalendarComponent;
-  @ViewChild("month") month!: DayPilotMonthComponent;
-  @ViewChild("navigator") nav!: DayPilotNavigatorComponent;
+export class CalendarComponent
+  extends UnsubscribeOnDestroy()
+  implements AfterViewInit
+{
+  @ViewChild('day') day!: DayPilotCalendarComponent;
+  @ViewChild('week') week!: DayPilotCalendarComponent;
+  @ViewChild('month') month!: DayPilotMonthComponent;
+  @ViewChild('navigator') nav!: DayPilotNavigatorComponent;
 
   events: DayPilot.EventData[] = [];
+  // events: any[] = [];
+
+  events2: any[] = [];
+
+  events3: any[] = [];
 
   date = DayPilot.Date.today();
+
 
   configNavigator: DayPilot.NavigatorConfig = {
     showMonths: 3,
     cellWidth: 25,
     cellHeight: 25,
-    onVisibleRangeChanged: args => {
+    onVisibleRangeChanged: (args) => {
       this.loadEvents();
-    }
+    },
   };
 
   selectTomorrow() {
@@ -46,30 +53,31 @@ export class CalendarComponent extends UnsubscribeOnDestroy() implements AfterVi
     this.configMonth.startDate = date;
   }
 
-  configDay: DayPilot.CalendarConfig = {
-  };
+  configDay: DayPilot.CalendarConfig = {};
 
   configWeek: DayPilot.CalendarConfig = {
-    viewType: "Week",
+    viewType: 'Week',
     onTimeRangeSelected: async (args) => {
-      const modal = await DayPilot.Modal.prompt("Añadir nueva cita:", "Cita");
+      const modal = await DayPilot.Modal.prompt('Añadir nueva cita:', 'Cita');
       const dp = args.control;
       dp.clearSelection();
-      if (!modal.result) { return; }
-      dp.events.add(new DayPilot.Event({
-        start: args.start,
-        end: args.end,
-        id: DayPilot.guid(),
-        text: modal.result
-      }));
-    }
+      if (!modal.result) {
+        return;
+      }
+      dp.events.add(
+        new DayPilot.Event({
+          start: args.start,
+          end: args.end,
+          id: DayPilot.guid(),
+          text: modal.result,
+        })
+      );
+    },
   };
 
-  configMonth: DayPilot.MonthConfig = {
+  configMonth: DayPilot.MonthConfig = {};
 
-  };
-
-  constructor(private ds: DataService) {
+  constructor(private citaService: CitaService, private ds: DataService) {
     super();
     this.viewWeek();
   }
@@ -81,38 +89,82 @@ export class CalendarComponent extends UnsubscribeOnDestroy() implements AfterVi
   loadEvents(): void {
     const from = this.nav.control.visibleStart();
     const to = this.nav.control.visibleEnd();
-    this.ds.getEvents(from, to).subscribe(result => {
-      console.log('resultado:',result)
+
+    this.ds.getEvents(from, to).subscribe((result) => {
       this.events = result;
+      console.log('pre', this.events);
     });
+
+    // ****
+    // Este codigo es el que tras cargarse eventos moqueados, 
+    // te trae la lista del back de citas y cambia el formato al que tiene
+    //eventos y añado citas, pero se queda congelado el navegador y bloquea todo
+    // cosa que con los datos moqeuados no pasa
+    // ****
+
+
+    this.ds
+      .read(from, to)
+      .pipe(
+        tap((result) => {
+
+            result.forEach((cita) => {
+            let id = cita.id;
+
+            console.log('todos tienen id', cita.id);
+
+            let anio = cita['fecha']?.substring(0, 4);
+            let mes = cita['fecha']?.substring(5, 7);
+            let dia = cita['fecha']?.substring(8, 10);
+            let hora = cita['fecha']?.substring(11, 13);
+            let text = cita['anotaciones'];
+
+            // this.events.push({
+            this.events.push({
+              id: id,
+              start: DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(
+               hora
+              ),
+              end: DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(
+              hora
+              ),
+              text: text,
+              
+            });
+          });
+
+          console.log(this.events3);
+          // this.events = this.events3;
+        })
+      )
+      .subscribe(); // fin servicio
+
+   
   }
 
-  viewDay():void {
-    this.configNavigator.selectMode = "Day";
+  viewDay(): void {
+    this.configNavigator.selectMode = 'Day';
     this.configDay.visible = true;
     this.configWeek.visible = false;
     this.configMonth.visible = false;
   }
 
-  viewWeek():void {
-    this.configNavigator.selectMode = "Week";
+  viewWeek(): void {
+    this.configNavigator.selectMode = 'Week';
     this.configDay.visible = false;
     this.configWeek.visible = true;
     this.configMonth.visible = false;
   }
 
-  viewMonth():void {
-    this.configNavigator.selectMode = "Month";
+  viewMonth(): void {
+    this.configNavigator.selectMode = 'Month';
     this.configDay.visible = false;
     this.configWeek.visible = false;
     this.configMonth.visible = true;
   }
 
-// let d:any = new Date('2015-03-04T00:00:00.000Z');
-// console.log(d.getUTCHours()); // Hours
-// console.log(d.getUTCMinutes());
-// console.log(d.getUTCSeconds());
-
-
+  // let d:any = new Date('2015-03-04T00:00:00.000Z');
+  // console.log(d.getUTCHours()); // Hours
+  // console.log(d.getUTCMinutes());
+  // console.log(d.getUTCSeconds());
 }
-
