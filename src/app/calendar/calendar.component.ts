@@ -8,6 +8,11 @@ import {
 import { DataService } from './data.service';
 import { UnsubscribeOnDestroy } from '../shared/classes/unsubscribe-on-destroy.class';
 import { take, tap } from 'rxjs';
+import { ClienteService } from '../services/cliente.service';
+import { Cliente } from '../models/cliente.model';
+import { CitaService } from '../services/citas.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'calendar-component',
@@ -24,8 +29,14 @@ export class CalendarComponent
   @ViewChild('navigator') nav!: DayPilotNavigatorComponent;
 
   // events: DayPilot.EventData[] = [];
+  comboCliente: any[] = [];
   events: any[] = [];
-  evento: DayPilot.EventData = {};
+  // evento: DayPilot.EventData = {
+  //   start: '',
+  //   end: '',
+  //   id: '',
+  //   text: ''
+  // };
 
   date = DayPilot.Date.today();
 
@@ -53,26 +64,65 @@ export class CalendarComponent
   configWeek: DayPilot.CalendarConfig = {
     viewType: 'Week',
     onTimeRangeSelected: async (args) => {
-      const modal = await DayPilot.Modal.prompt('Añadir nueva cita:', 'Cita');
-      const dp = args.control;
-      dp.clearSelection();
-      if (!modal.result) {
-        return;
-      }
-      dp.events.add(
-        new DayPilot.Event({
-          start: args.start,
-          end: args.end,
-          id: DayPilot.guid(),
-          text: modal.result,
-        })
-      );
+  
+      const form = [
+        {name: "Mascota", id: "mascota"},
+        {name: "Cliente", id: "idCliente", type:"select", options:this.comboCliente}
+      ];
+
+      let cita;
+
+      await DayPilot.Modal.form(form).then(data => {
+        console.log(data)
+        if(data.result) {
+          cita = {
+            // start: args.start,
+            // end: args.end,
+            // id: DayPilot.guid(),
+            fecha: args.start,
+            id:null,
+            cliente:{id:data.result['idCliente']},
+            anotaciones:data.result['mascota']
+          }
+
+          this.citaService.create(cita).subscribe(() => {
+            this.clienteService.showMessage('Creado con éxito!');
+            this.router.navigate(['/cita']);
+            window.location.reload();
+          });
+
+        }//if
+       
+      });
     },
+    //AÑADE ESTO:
+    onEventClick: (args) => {
+      const dp = args.control;
+      console.log('borrado',args.e.data.id)
+      const confirm = DayPilot.Modal.confirm('Seguro que quieres borrar la cita?').then((value) => {
+        
+        if(value.result === 'OK') {
+
+          this.citaService.delete(args.e.data.id).subscribe(()=>{
+
+            this.citaService.showMessage('Cita creada');
+            this.router.navigate(['/cita']);
+            window.location.reload();
+          });
+
+          // dp.events.remove(args.e);
+        }
+      });
+
+    }
   };
 
   configMonth: DayPilot.MonthConfig = {};
 
   constructor(
+    private citaService:CitaService,
+    private router: Router,
+    private clienteService: ClienteService,
     private ds: DataService) {
 
     super();
@@ -80,10 +130,29 @@ export class CalendarComponent
   }
 
   ngAfterViewInit(): void {
+    this.getClientes();
     this.loadEvents();
   }
 
+  getClientes(){
+
+    this.clienteService.readCombo().subscribe((data)=> {
+
+      this.comboCliente = data.map((cliente)=> {
+
+        return {name:`${cliente.nombre} ${cliente.descripcion}`,id:cliente.id,type:'text'}
+
+      });
+
+    }
+    
+
+    );
+  }
+
+
   loadEvents(): void {
+    this.events = [];
     const from = this.nav.control.visibleStart();
     const to = this.nav.control.visibleEnd();
 
@@ -142,9 +211,6 @@ export class CalendarComponent
     this.configWeek.visible = false;
     this.configMonth.visible = true;
   }
-
-
-  
 
   // let d:any = new Date('2015-03-04T00:00:00.000Z');
   // console.log(d.getUTCHours()); // Hours

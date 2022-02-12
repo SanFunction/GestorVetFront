@@ -36,6 +36,10 @@ export class ClienteService {
     );
   }
 
+  readCombo(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(this.baseUrl);
+  }
+
   readById(id: any): Observable<Cliente> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.get<Cliente>(url).pipe(

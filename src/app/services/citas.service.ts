@@ -24,7 +24,8 @@ export class CitaService {
     });
   }
 
-  create(cita: Cita): Observable<Cita> {
+  create(cita: any): Observable<Cita> {
+    console.log('formato cita', cita)
     return this.http.post<Cita>(this.baseUrl, cita).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
