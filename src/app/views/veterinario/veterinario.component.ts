@@ -42,12 +42,8 @@ export class VeterinarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.veterinarioService.read().subscribe((vet) => {
-    //   console.log(vet)
-    //   this.veterinarios = vet;
-    // });
+
     this.veterinarioService.getAllVet().subscribe((vet) => {
-      console.log(vet)
       this.veterinarios = vet;
     });
   }
@@ -113,7 +109,7 @@ export class VeterinarioComponent implements OnInit {
     this.modal = '';
     this.editVet = vet;
 
-    console.log('valor recibido:', vet);
+  
     const dialogo1 = this.dialog.open(VeterinarioCreateComponent, {
       data: this.editVet,
     });

@@ -189,10 +189,7 @@ export class DiagnosticoComponent implements OnInit {
   } // funcion carga
 
   navigateToMascotaCrud(diag: Diagnostico): void {
-    // this.idDiagnostico = (diag.id).toString();
 
-    //  console.log(this.idDiagnostico);
-    //  sessionStorage.setItem('idDiagnostico',this.idDiagnostico);
 
     this.router.navigate(['/mascota/{id}']);
   }

@@ -163,11 +163,7 @@ export class MascotaComponent implements OnInit {
   }
 
   navigateToDiagnosticoCrud(mascot: Mascota): void {
-    // this.idCliente = client.id.toString();
-    // sessionStorage.setItem("idCliente", ()!.toString());
-    // this.clienteService.readById(client.id).subscribe((cl) => {
-    //  console.log('peticion servicio',cl)
-    // });
+
     this.idMascota = mascot.id!.toString();
     sessionStorage.setItem('idMascota', this.idMascota);
 

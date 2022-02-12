@@ -147,7 +147,6 @@ export class ClienteComponent implements OnInit {
   }
 
   cargarList() {
-
     this.clienteService.read().subscribe((cl) => {
       this.clientes = cl;
       this.loading = false;
@@ -155,11 +154,9 @@ export class ClienteComponent implements OnInit {
   }
 
   navigateToMascotaCrud(client: Cliente): void {
-    // this.idCliente = client.id.toString();
+
     sessionStorage.setItem('idCliente', client.id!.toString());
-    // this.clienteService.readById(client.id).subscribe((cl) => {
-    //  console.log('peticion servicio',cl)
-    // });
+
 
     this.router.navigate(['/mascota']);
   }

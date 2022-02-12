@@ -6,9 +6,3 @@ export interface Cita {
     fecha?: Date
 }
 
-// export interface Event {
-//     id?: number
-//     start?: DayPilot.Date
-//     end?: DayPilot.Date
-//     text?: string
-// }

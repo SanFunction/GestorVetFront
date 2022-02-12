@@ -91,12 +91,6 @@ export class TratamientoCrudComponent implements OnInit {
       return false;
     }
 
-    if (data.tipoTratamiento == "" || data.tipoTratamiento == null) {
-      document.getElementById("tipoTratamiento")!.focus();
-      this.tratamientoService.showMessage("El teléfono no puede estar vacío", true);
-      return false;
-    }
-
     return true;
   }
 
@@ -105,8 +99,6 @@ export class TratamientoCrudComponent implements OnInit {
       this.dialogRef.close(data);
     }
   }
-
-
 
 
 }

@@ -67,17 +67,12 @@ export class TratamientoComponent implements OnInit {
           this.tratamientoService.create(tratam).subscribe(() => {
             this.tratamientoService.showMessage('Creado con éxito!');
             this.router.navigate(['/tratamiento']);
+            this.cargarList();
           });
         } else {
           this.cargarList();
         }
-      } catch (error) {
-        
-      }
-
-
-
-
+      } catch (error) {}
     });
   }
 
@@ -132,7 +127,6 @@ export class TratamientoComponent implements OnInit {
     this.modal = '';
     this.editTratamiento = tratam;
 
-    console.log('valor recibido:', tratam);
     const dialogo1 = this.dialog.open(TratamientoCrudComponent, {
       data: this.editTratamiento,
     });

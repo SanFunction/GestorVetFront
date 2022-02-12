@@ -28,15 +28,9 @@ export class CalendarComponent
   @ViewChild('month') month!: DayPilotMonthComponent;
   @ViewChild('navigator') nav!: DayPilotNavigatorComponent;
 
-  // events: DayPilot.EventData[] = [];
+ 
   comboCliente: any[] = [];
   events: any[] = [];
-  // evento: DayPilot.EventData = {
-  //   start: '',
-  //   end: '',
-  //   id: '',
-  //   text: ''
-  // };
 
   date = DayPilot.Date.today();
 
@@ -76,9 +70,6 @@ export class CalendarComponent
         console.log(data)
         if(data.result) {
           cita = {
-            // start: args.start,
-            // end: args.end,
-            // id: DayPilot.guid(),
             fecha: args.start,
             id:null,
             cliente:{id:data.result['idCliente']},
@@ -95,11 +86,10 @@ export class CalendarComponent
        
       });
     },
-    //AÑADE ESTO:
+  
     onEventClick: (args) => {
-      const dp = args.control;
-      console.log('borrado',args.e.data.id)
-      const confirm = DayPilot.Modal.confirm('Seguro que quieres borrar la cita?').then((value) => {
+      
+      DayPilot.Modal.confirm('Seguro que quieres borrar la cita?').then((value) => {
         
         if(value.result === 'OK') {
 

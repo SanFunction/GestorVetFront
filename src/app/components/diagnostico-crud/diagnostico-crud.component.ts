@@ -52,7 +52,7 @@ export class DiagnosticoCrudComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
+  
     switch (this.valorModal) {
       case 'create':
         this.mCreate = true;
@@ -191,19 +191,19 @@ export class DiagnosticoCrudComponent implements OnInit {
       .subscribe((v) => {
         this.data.veterinario = v;
         this.nombreVet = this.data.veterinario.nombre;
-        console.log(this.data.veterinario.nombre)
+       
       });
   }
 
   submit(data: Diagnostico) {
     data.veterinario = {id:this.selectedValueVet };
-    console.log('estoy en submit', this.data);
+   
     data.tratamiento = this.selectedValueTrat;
     if (this.validar(data)) {
       // data.veterinario = { id: 1 };
       data.mascota = this.mascota;
 
-      console.log('enviamos',data)
+    
       this.dialogRef.close(data);
     }
   }
