@@ -5,6 +5,7 @@ import { Especie } from 'src/app/models/especie.model';
 import { Mascota } from 'src/app/models/mascota.model';
 import { EspecieService } from 'src/app/services/especie.service';
 import { MascotaService } from 'src/app/services/mascota.service';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 
 @Component({
   selector: 'app-mascota-crud',
@@ -27,6 +28,7 @@ export class MascotaCrudComponent implements OnInit {
   longitud: any;
 
   constructor(
+    private http: HttpClient,
     private especieService: EspecieService,
     private mascotaService: MascotaService,
     public dialogRef: MatDialogRef<MascotaCrudComponent>,
@@ -98,9 +100,7 @@ export class MascotaCrudComponent implements OnInit {
 
   
   onFileChanged(event:any) {
-    this.selectedFile = event.target.files[0].name;
-    
-    
+    this.selectedFile = event.target.files.item(0);
   }
 
 
@@ -133,13 +133,28 @@ export class MascotaCrudComponent implements OnInit {
   }
 
   submit(data: Mascota) {
-    
+    const baseUrl = 'http://localhost:8080';
+
     if(this.selectedFile == null || this.selectedFile =='' || this.selectedFile=='Sin foto'){
 
-      this.selectedFile = 'paw.jpg';
+      this.selectedFile.name = 'paw.jpg';
 
+    } else {
+      const file: File | null = this.selectedFile;
+      if (file) {
+        const formData: FormData = new FormData();
+        formData.append('file', file);
+        const req = new HttpRequest('POST', `${baseUrl}/upload`, formData, {
+          reportProgress: true,
+          responseType: 'json'
+        });
+
+        this.http.request(req).subscribe((data) => {
+          console.log(data);
+        })
+      }
     }
-    data.foto = this.selectedFile;
+    data.foto = this.selectedFile.name;
     data.especie = this.selectedValue;
     data.cliente = { id: this.idCliente };
 
