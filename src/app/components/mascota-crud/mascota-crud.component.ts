@@ -14,13 +14,13 @@ import { MascotaService } from 'src/app/services/mascota.service';
 export class MascotaCrudComponent implements OnInit {
 
  
-  fileAttr = 'Choose File';
+  
   mCreate: boolean;
   mUpdate: boolean;
   mDelete: boolean;
   mDetail: boolean;
-  selectedValue: string = '';
-  selectedFile: string ='Sin foto';
+  selectedValue: any = '';
+  selectedFile: any ='Sin foto';
   valorModal: any;
   especie: Especie[];
   idCliente: number;
@@ -58,6 +58,10 @@ export class MascotaCrudComponent implements OnInit {
         this.mDelete = false;
         this.mUpdate = true;
         this.mDetail = false;
+        console.log(typeof(this.data.foto))
+        this.selectedFile = this.data.foto;
+        this.selectedValue = this.data.especie;
+        console.log(this.selectedFile)
         break;
 
       case 'delete':
@@ -72,6 +76,9 @@ export class MascotaCrudComponent implements OnInit {
         this.mDelete = false;
         this.mUpdate = false;
         this.mDetail = true;
+        this.selectedFile = this.data.foto;
+        
+        console.log(this.data.foto)
         break;
     }
   }
@@ -92,10 +99,9 @@ export class MascotaCrudComponent implements OnInit {
   
   onFileChanged(event:any) {
     this.selectedFile = event.target.files[0].name;
-    console.log('selecionado',this.selectedFile);
+    
+    
   }
-
-// onfilechanged guarda en selectedfile el nombre de la imagens
 
 
   validar(data: Mascota): boolean {
@@ -127,12 +133,12 @@ export class MascotaCrudComponent implements OnInit {
   }
 
   submit(data: Mascota) {
-    console.log('data',data)
+    
     data.foto = this.selectedFile;
     data.especie = this.selectedValue;
     data.cliente = { id: this.idCliente };
 
-    console.log('mascot',data)
+    
     if (this.validar(data)) {
       this.dialogRef.close(data);
     }

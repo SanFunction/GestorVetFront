@@ -5,18 +5,26 @@
 
   <div mat-dialog-content>
     <div class="dialogCase">
-      <mat-form-field *ngIf="mUpdate || mDetail">
+      <img 
+      *ngIf="mDetail || mUpdate" 
+      matPrefix src="{{'http://localhost:8080/mascotas/'+ data.foto}}" 
+      width="130px" 
+      style="border-radius:50%; margin:auto"
+      >
+
+      <!-- <mat-form-field *ngIf="mUpdate || mDetail">
         <input
           matInput
           [(ngModel)]="data.id"
           type="number"
           [readonly]="mDetail"
         />
-      </mat-form-field>
+      </mat-form-field> -->
 
       <mat-form-field>
         <input
           matInput
+          style="padding-top:1px"
           [(ngModel)]="data.nombre"
           type="text"
           id="nombre"
@@ -92,26 +100,31 @@
         />
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field *ngIf="mCreate || mUpdate">
         <div>
           <mat-toolbar>
-            <!-- Display files names -->
+            <div style="display:flex">
             <input
               matInput
               readonly
               name="foto"
               id="fileUpload"
+              style="font-size: medium"
               [(ngModel)]="selectedFile"
               
             />
-
-            <!-- Browse Button -->
-            <button mat-flat-button 
-            color="primary" 
-            (click)="fileInput.click()">Browse File</button>
-
+            <button 
+            mat-stroked-button color="primary"
+            style=" display: block;
+            width: 50px;
+            height: 40px;"
+            (click)="fileInput.click()">
+            
+            <i class="material-icons">search</i>
+          </button>
+          </div>
           </mat-toolbar>
-          <!-- Fetch selected filed on change -->
+         
           <input
             type="file"
             #fileInput
@@ -123,20 +136,7 @@
         </div>
       </mat-form-field>
 
-      <!-- <mat-form-field *ngIf="mCreate">
-        <mat-label>Foto</mat-label> -->
-      <!-- Display files names -->
-      <!-- <input matInput readonly name="name" /> -->
-      <!-- Browse Button -->
-      <!-- <input
-          style="display: none"
-          type="file"
-          (change)="onFileChanged($event)"
-          #fileInput
-        /> -->
-      <!-- <button (click)="fileInput.click()">Select File</button> -->
-      <!-- <button mat-flat-button color="primary">Browse File</button>-->
-      <!-- </mat-form-field> -->
+
     </div>
   </div>
   <div mat-dialog-actions>

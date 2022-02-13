@@ -16,7 +16,7 @@ import { DiagnosticoService } from 'src/app/services/diagnostico.service';
 })
 export class MascotaComponent implements OnInit {
   mascotas: Mascota[];
-  displayedColumns = ['nombre', 'especie', 'edad', 'historial', 'action'];
+  displayedColumns = ['avatar','nombre', 'especie', 'edad', 'historial', 'action'];
   nuevoMascota: Mascota;
   editMascota: Mascota;
   modal: string;
