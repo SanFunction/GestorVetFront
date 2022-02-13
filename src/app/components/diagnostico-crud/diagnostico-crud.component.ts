@@ -19,8 +19,10 @@ export class DiagnosticoCrudComponent implements OnInit {
   mUpdate: boolean;
   mDelete: boolean;
   mDetail: boolean;
+  estado: any[];
   selectedValueTrat: any = '';
   selectedValueVet: any = '';
+  estadoSelected: any ='';
   valorModal: any;
   veterinario: Veterinario[];
   tratamiento: Tratamiento[];
@@ -48,6 +50,12 @@ export class DiagnosticoCrudComponent implements OnInit {
       id: Number(this.id),
     };
     
+    this.estado =[
+      {name:'En curso',id:2},
+      {name:'Cerrado',id:3},
+      {name:'Re-abierto',id:4},
+      {name:'Apertura',id:1}
+    ]
    
   }
 
@@ -75,8 +83,9 @@ export class DiagnosticoCrudComponent implements OnInit {
         this.comboVeterinario();
         this.comboTratamientos();
         this.selectedValueTrat = this.data.tratamiento;
-        this.selectedValueVet = this.data.veterinario?.nombre;
+        this.getVetIdDiagnostico();
         this.data.mascota = this.mascota;
+        this.data.estado = this.estadoSelected;
         break;
 
       case 'delete':
@@ -92,6 +101,7 @@ export class DiagnosticoCrudComponent implements OnInit {
         this.mUpdate = false;
         this.mDetail = true;
         this.getVetIdDiagnostico();
+        
         break;
     }
   }
@@ -191,19 +201,17 @@ export class DiagnosticoCrudComponent implements OnInit {
       .subscribe((v) => {
         this.data.veterinario = v;
         this.nombreVet = this.data.veterinario.nombre;
-       
+        this.selectedValueVet = this.nombreVet;
       });
   }
 
   submit(data: Diagnostico) {
     data.veterinario = {id:this.selectedValueVet };
-   
+    data.estado = this.estadoSelected;
     data.tratamiento = this.selectedValueTrat;
     if (this.validar(data)) {
       // data.veterinario = { id: 1 };
       data.mascota = this.mascota;
-
-    
       this.dialogRef.close(data);
     }
   }

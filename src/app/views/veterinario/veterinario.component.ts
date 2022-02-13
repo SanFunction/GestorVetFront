@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -21,6 +26,7 @@ export class VeterinarioComponent implements OnInit {
   nuevoVet: Veterinario;
   editVet: Veterinario;
   modal: string;
+  loading: boolean;
 
   constructor(
     private veterinarioService: VeterinarioService,
@@ -34,20 +40,23 @@ export class VeterinarioComponent implements OnInit {
       routeUrl: '/veterinario',
     };
 
+    this.loading = true;
     this.modal = '';
     this.editVet = {};
     this.nuevoVet = {};
-    this.veterinarios = [
-    ];
+    this.veterinarios = [];
   }
 
   ngOnInit(): void {
-
-    this.veterinarioService.getAllVet().subscribe((vet) => {
-      this.veterinarios = vet;
-    });
+    this.cargarList();
   }
 
+  cargarList() {
+    this.veterinarioService.getAllVet().subscribe((vet) => {
+      this.veterinarios = vet;
+      this.loading = false;
+    });
+  }
   abrirDialogo() {
     this.modal = 'create';
     sessionStorage.removeItem('modal');
@@ -64,10 +73,18 @@ export class VeterinarioComponent implements OnInit {
     });
 
     dialogo1.afterClosed().subscribe((vet) => {
-      this.veterinarioService.create(vet).subscribe(() => {
-        this.veterinarioService.showMessage('Veterinario creado!');
-        this.router.navigate(['/veterinario']);
-      });
+      this.loading = true;
+      try {
+        if (vet) {
+          this.veterinarioService.create(vet).subscribe(() => {
+            this.veterinarioService.showMessage('Veterinario creado!');
+            this.router.navigate(['/veterinario']);
+            this.cargarList();
+          });
+        } else {
+          this.cargarList();
+        }
+      } catch (error) {}
     });
   }
 
@@ -83,10 +100,19 @@ export class VeterinarioComponent implements OnInit {
     });
 
     dialogo1.afterClosed().subscribe((vet) => {
-      this.veterinarioService.update(vet).subscribe(() => {
-        this.veterinarioService.showMessage('Datos actualizados!');
-        this.router.navigate(['/veterinario']);
-      });
+      this.loading = true;
+
+      try {
+        if (vet) {
+          this.veterinarioService.update(vet).subscribe(() => {
+            this.veterinarioService.showMessage('Datos actualizados!');
+            this.router.navigate(['/veterinario']);
+            this.cargarList();
+          });
+        } else {
+          this.cargarList();
+        }
+      } catch (error) {}
     });
   }
 
@@ -109,24 +135,31 @@ export class VeterinarioComponent implements OnInit {
     this.modal = '';
     this.editVet = vet;
 
-  
     const dialogo1 = this.dialog.open(VeterinarioCreateComponent, {
       data: this.editVet,
     });
 
     dialogo1.afterClosed().subscribe((vet) => {
-      this.veterinarioService.delete(vet.id).subscribe(() => {
-        this.veterinarioService.showMessage('Eliminado con éxito');
-        this.router.navigate(['/veterinario']);
-      });
+      this.loading = true;
+
+      try {
+        if (vet) {
+          this.veterinarioService.delete(vet.id).subscribe(() => {
+            this.veterinarioService.showMessage('Eliminado con éxito');
+            this.router.navigate(['/veterinario']);
+          });
+        } else {
+          this.cargarList();
+        }
+      } catch (error) {}
     });
   }
 
-  agregar(vet: Veterinario) {
-    this.veterinarios.push(this.nuevoVet);
-  }
+  // agregar(vet: Veterinario) {
+  //   this.veterinarios.push(this.nuevoVet);
+  // }
 
-  update(vet: Veterinario) {
-    this.veterinarios.push(this.nuevoVet);
-  }
+  // update(vet: Veterinario) {
+  //   this.veterinarios.push(this.nuevoVet);
+  // }
 }

@@ -48,7 +48,7 @@ export class DiagnosticoComponent implements OnInit {
     this.modal = '';
     this.editDiagnostico = {};
     this.idDiagnostico = '';
-    this.loading = false;
+    this.loading = true;
     this.nuevoDiagnostico = {};
     this.diagnosticos = [];
     this.mascotaDiagnosticos = [];
@@ -74,7 +74,7 @@ export class DiagnosticoComponent implements OnInit {
     });
 
     dialogo1.afterClosed().subscribe((diag) => {
-      this.loading = false;
+      this.loading = true;
       try {
         if (diag) {
           diag.mascota = this.mascota;
@@ -107,6 +107,7 @@ export class DiagnosticoComponent implements OnInit {
     });
 
     dialogo1.afterClosed().subscribe((diag) => {
+      this.loading = true;
       try {
         if (diag) {
           this.diagnosticoService.update(diag).subscribe(() => {

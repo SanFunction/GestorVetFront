@@ -8,7 +8,7 @@
     <div class="dialogCase"
       
     >
-      <mat-form-field 
+      <!-- <mat-form-field 
       *ngIf="mDetail">
         <input
           matInput
@@ -17,7 +17,7 @@
           placeholder="Código..."
           [readonly]="mDetail"
         />
-      </mat-form-field>
+      </mat-form-field> -->
       
       <mat-form-field>
         <input
@@ -29,7 +29,7 @@
         />
       </mat-form-field>
 
-      <mat-form-field>
+      <!-- <mat-form-field>
         <input
           matInput
           [(ngModel)]="data.estado"
@@ -37,7 +37,42 @@
           placeholder="Estado..."
           [readonly]="mDetail"
         />
-      </mat-form-field>
+      </mat-form-field> -->
+
+
+      <mat-form-field >
+        <mat-label>Estado</mat-label>
+         <mat-select
+           *ngIf="mCreate || mUpdate"
+           [(ngModel)]="estadoSelected"
+           name="estado"
+           id="estado">
+           <mat-option *ngFor="let es of estado" [value]="es.name">
+             {{ es.name }}
+           </mat-option>
+         </mat-select>
+ 
+         <input
+           matInput
+           *ngIf="mDetail"
+           [(ngModel)]="data.estado"
+           type="text"
+           [readonly]="mDetail"
+         />
+       </mat-form-field> 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <mat-form-field>
         <input

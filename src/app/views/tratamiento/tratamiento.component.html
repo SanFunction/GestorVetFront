@@ -3,7 +3,7 @@
 </div>
 
 
-  <div class="flex-container">
+  <div class="flex-container" *ngIf="!loading">
     <div id="navButton"></div>
     <div>
       <button mat-raised-button (click)="abrirDialogo()" color="primary">
@@ -11,7 +11,7 @@
       </button>
     </div>
   </div>
-  <div class="mat-elevation-z4">
+  <div class="mat-elevation-z4" *ngIf="!loading">
       <table mat-table [dataSource]="tratamientos">
 <!-- 
         <ng-container matColumnDef="id">

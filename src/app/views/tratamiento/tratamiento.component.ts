@@ -38,7 +38,7 @@ export class TratamientoComponent implements OnInit {
     this.editTratamiento = {};
     this.idTratamiento = '';
     this.nuevoTratamiento = {};
-    this.loading = false;
+    this.loading = true;
   }
 
   ngOnInit(): void {
@@ -137,6 +137,7 @@ export class TratamientoComponent implements OnInit {
         this.tratamientoService.delete(tratam.id).subscribe(() => {
           this.tratamientoService.showMessage('Eliminado con exito');
           this.router.navigate(['/tratamiento']);
+          this.cargarList();
         });
       }else {
         this.cargarList();
