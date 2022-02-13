@@ -74,12 +74,17 @@ export class MascotaComponent implements OnInit {
       this.loading = true;
     
       try {
-        mascota.id = null;
+        if(mascota){
+         mascota.id = null;
         this.mascotaService.create(mascota).subscribe(() => {
           this.mascotaService.showMessage('Creado con éxito!');
           this.router.navigate(['/mascota']);
           this.cargarList();
-        });
+        }); 
+        }else {
+          this.cargarList();
+        }
+        
       } catch (error) {}
     });
   }

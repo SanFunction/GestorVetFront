@@ -134,6 +134,11 @@ export class MascotaCrudComponent implements OnInit {
 
   submit(data: Mascota) {
     
+    if(this.selectedFile == null || this.selectedFile =='' || this.selectedFile=='Sin foto'){
+
+      this.selectedFile = 'paw.jpg';
+
+    }
     data.foto = this.selectedFile;
     data.especie = this.selectedValue;
     data.cliente = { id: this.idCliente };
