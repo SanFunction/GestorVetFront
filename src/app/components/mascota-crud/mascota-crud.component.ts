@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { take } from 'rxjs';
 import { Especie } from 'src/app/models/especie.model';
@@ -12,11 +12,15 @@ import { MascotaService } from 'src/app/services/mascota.service';
   styleUrls: ['./mascota-crud.component.css'],
 })
 export class MascotaCrudComponent implements OnInit {
+
+ 
+  fileAttr = 'Choose File';
   mCreate: boolean;
   mUpdate: boolean;
   mDelete: boolean;
   mDetail: boolean;
-  selectedValue: string ='';
+  selectedValue: string = '';
+  selectedFile: string ='Sin foto';
   valorModal: any;
   especie: Especie[];
   idCliente: number;
@@ -34,11 +38,10 @@ export class MascotaCrudComponent implements OnInit {
     this.mDetail = false;
     this.mUpdate = false;
     this.data = { ...data };
-    this.especie=[];
+    this.especie = [];
     this.comboEspecie();
-    this.idCliente = Number(this.data.cliente)
-    this.longitud =(this.data.diagnostico)
-   
+    this.idCliente = Number(this.data.cliente);
+    this.longitud = this.data.diagnostico;
   }
 
   ngOnInit(): void {
@@ -71,26 +74,29 @@ export class MascotaCrudComponent implements OnInit {
         this.mDetail = true;
         break;
     }
-
- 
   }
 
-
-  comboEspecie(){
+  comboEspecie() {
     this.especieService
-    .getAllEsp()
-    .pipe(take(1))
-    .subscribe((data) => {
-      this.especie = data;
-    });
-
+      .getAllEsp()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.especie = data;
+      });
   }
-
-
 
   cancelar() {
     this.dialogRef.close();
   }
+
+  
+  onFileChanged(event:any) {
+    this.selectedFile = event.target.files[0].name;
+    console.log('selecionado',this.selectedFile);
+  }
+
+// onfilechanged guarda en selectedfile el nombre de la imagens
+
 
   validar(data: Mascota): boolean {
     if (data.nombre == '' || data.nombre == null) {
@@ -116,26 +122,19 @@ export class MascotaCrudComponent implements OnInit {
       this.mascotaService.showMessage('Debe introducir peso aproximado', true);
       return false;
     }
-    
 
     return true;
   }
 
-
   submit(data: Mascota) {
+    console.log('data',data)
+    data.foto = this.selectedFile;
     data.especie = this.selectedValue;
-    data.cliente ={id: this.idCliente}
+    data.cliente = { id: this.idCliente };
 
+    console.log('mascot',data)
     if (this.validar(data)) {
       this.dialogRef.close(data);
     }
   }
-
-
-
-
-
-
-
-
 }

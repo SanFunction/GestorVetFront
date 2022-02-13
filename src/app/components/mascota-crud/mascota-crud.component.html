@@ -91,6 +91,52 @@
           [readonly]="mDetail"
         />
       </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <mat-toolbar>
+            <!-- Display files names -->
+            <input
+              matInput
+              readonly
+              name="foto"
+              id="fileUpload"
+              [(ngModel)]="selectedFile"
+              
+            />
+
+            <!-- Browse Button -->
+            <button mat-flat-button 
+            color="primary" 
+            (click)="fileInput.click()">Browse File</button>
+
+          </mat-toolbar>
+          <!-- Fetch selected filed on change -->
+          <input
+            type="file"
+            #fileInput
+            id="uploadFile"
+            name="uploadFile"
+            accept="image/*"
+            (change)="onFileChanged($event)"
+          />
+        </div>
+      </mat-form-field>
+
+      <!-- <mat-form-field *ngIf="mCreate">
+        <mat-label>Foto</mat-label> -->
+      <!-- Display files names -->
+      <!-- <input matInput readonly name="name" /> -->
+      <!-- Browse Button -->
+      <!-- <input
+          style="display: none"
+          type="file"
+          (change)="onFileChanged($event)"
+          #fileInput
+        /> -->
+      <!-- <button (click)="fileInput.click()">Select File</button> -->
+      <!-- <button mat-flat-button color="primary">Browse File</button>-->
+      <!-- </mat-form-field> -->
     </div>
   </div>
   <div mat-dialog-actions>
