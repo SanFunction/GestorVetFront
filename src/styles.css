@@ -20,3 +20,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: #e35e6b;
     color: #fff;
 }
+
+.cdk-overlay-pane {
+    width: 15vw;
+}
+
+.mat-dialog-content {
+    overflow: inherit !important;
+    max-height: 70vh !important;
+}
+
+.mat-cell, .mat-footer-cell {
+    font-size: 18px !important;
+}
+
+.mat-elevation-z4 a {
+    cursor: pointer !important;
+}

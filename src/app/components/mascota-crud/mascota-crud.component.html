@@ -9,7 +9,7 @@
       *ngIf="mDetail || mUpdate" 
       matPrefix src="{{'http://localhost:8080/mascotas/'+ data.foto}}" 
       width="130px" 
-      style="border-radius:50%; margin:auto"
+      style="border-radius:50%; margin:0 auto 25px auto"
       >
 
       <!-- <mat-form-field *ngIf="mUpdate || mDetail">
@@ -28,7 +28,7 @@
           [(ngModel)]="data.nombre"
           type="text"
           id="nombre"
-          placeholder="Nombre..."
+          placeholder="Nombre"
           [readonly]="mDetail"
         />
       </mat-form-field>
@@ -62,7 +62,7 @@
           [(ngModel)]="data.raza"
           id="raza"
           type="text"
-          placeholder="Raza..."
+          placeholder="Raza"
           [readonly]="mDetail"
         />
       </mat-form-field>
@@ -73,7 +73,7 @@
           [(ngModel)]="data.color"
           id="color"
           type="text"
-          placeholder="Color..."
+          placeholder="Color"
           [readonly]="mDetail"
         />
       </mat-form-field>
@@ -84,7 +84,7 @@
           [(ngModel)]="data.edad"
           id="edad"
           type="text"
-          placeholder="Edad..."
+          placeholder="Edad"
           [readonly]="mDetail"
         />
       </mat-form-field>
@@ -95,7 +95,7 @@
           [(ngModel)]="data.peso"
           id="peso"
           type="text"
-          placeholder="Peso..."
+          placeholder="Peso"
           [readonly]="mDetail"
         />
       </mat-form-field>

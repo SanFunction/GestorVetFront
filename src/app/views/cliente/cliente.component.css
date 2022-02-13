@@ -14,7 +14,6 @@ table th {
     
     padding-left: 20px;
     padding-right: 20px;
-    width: 96.5%;
     margin-top: 40px;
     margin-bottom: 60px;
 
@@ -23,7 +22,6 @@ table th {
     display: flex;
     justify-content: space-between;
     margin-top: 50px;
-    width: 98.3%;
   }
 .edit {
     margin-right: 10px;
