@@ -95,6 +95,7 @@ export class TratamientoComponent implements OnInit {
           this.tratamientoService.update(tratam).subscribe(() => {
             this.tratamientoService.showMessage('Datos actualizados!');
             this.router.navigate(['/tratamiento']);
+            this.cargarList();
           });
         } else {
           this.cargarList();
