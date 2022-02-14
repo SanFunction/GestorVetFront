@@ -201,7 +201,10 @@ export class DiagnosticoCrudComponent implements OnInit {
       .subscribe((v) => {
         this.data.veterinario = v;
         this.nombreVet = this.data.veterinario.nombre;
-        this.selectedValueVet = this.nombreVet;
+        if(!this.selectedValueVet){
+          this.selectedValueVet = v.id;
+        }
+        
       });
   }
 

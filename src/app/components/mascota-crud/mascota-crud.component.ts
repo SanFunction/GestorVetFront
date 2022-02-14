@@ -13,8 +13,6 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
   styleUrls: ['./mascota-crud.component.css'],
 })
 export class MascotaCrudComponent implements OnInit {
-
- 
   
   mCreate: boolean;
   mUpdate: boolean;
@@ -53,6 +51,7 @@ export class MascotaCrudComponent implements OnInit {
         this.mDelete = false;
         this.mUpdate = false;
         this.mDetail = false;
+        this.selectedFile = 'Sin foto';
         break;
 
       case 'update':
@@ -60,10 +59,8 @@ export class MascotaCrudComponent implements OnInit {
         this.mDelete = false;
         this.mUpdate = true;
         this.mDetail = false;
-        console.log(typeof(this.data.foto))
         this.selectedFile = this.data.foto;
         this.selectedValue = this.data.especie;
-        console.log(this.selectedFile)
         break;
 
       case 'delete':
@@ -79,8 +76,6 @@ export class MascotaCrudComponent implements OnInit {
         this.mUpdate = false;
         this.mDetail = true;
         this.selectedFile = this.data.foto;
-        
-        console.log(this.data.foto)
         break;
     }
   }

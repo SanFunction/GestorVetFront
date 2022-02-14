@@ -67,7 +67,6 @@ export class CalendarComponent
       let cita;
 
       await DayPilot.Modal.form(form).then(data => {
-        console.log(data)
         if(data.result) {
           cita = {
             fecha: args.start,
@@ -130,7 +129,7 @@ export class CalendarComponent
 
       this.comboCliente = data.map((cliente)=> {
 
-        return {name:`${cliente.nombre} ${cliente.descripcion}`,id:cliente.id,type:'text'}
+        return {name:`${cliente.nombre} ${cliente.descripcion}`, id:cliente.id, type:'text'}
 
       });
 
@@ -161,6 +160,7 @@ export class CalendarComponent
             let dia = cita['fecha']?.substring(8, 10);
             let hora = cita['fecha']?.substring(11, 13);
             let text = cita['anotaciones'];
+            let cliente = `${cita.cliente.nombre} ${cita.cliente.descripcion}`
 
             let start = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(hora);
             let end = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(Number(hora)+1);
@@ -168,13 +168,12 @@ export class CalendarComponent
             this.events.push({
               start: start,
               end: end,
+              cliente: cliente,
               id: id,
-              text: text,
+              text: `Mascota:${text}\n Cliente:${cliente}`,
             });
           });
 
-          console.log(this.events);
-          // this.events = this.events3;
 
         })
       )

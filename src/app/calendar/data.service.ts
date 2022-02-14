@@ -14,8 +14,8 @@ export class DataService {
 
   baseUrl = 'http://localhost:8080/cita';
 
-  citas: any[];
-  citas2: any[];
+  // citas: any[];
+  
   events: any[] = [
     // {
     //   id: 1,
@@ -49,8 +49,8 @@ export class DataService {
       icon: 'storefront',
       routeUrl: '/cita',
     };
-    this.citas = [];
-    this.citas2 = [];
+    // this.citas = [];
+    // this.citas2 = [];
 
 
   }
