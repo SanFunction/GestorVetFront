@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import html2canvas from 'html2canvas';
 import { take } from 'rxjs';
 import { Diagnostico } from 'src/app/models/diagnostico.model';
 import { Mascota } from 'src/app/models/mascota.model';
@@ -29,6 +30,13 @@ export class DiagnosticoCrudComponent implements OnInit {
   mascota: any;
   nombreVet: any;
   id: any;
+
+  @ViewChild('screen')
+  screen!: ElementRef;
+  @ViewChild('canvas')
+  canvas!: ElementRef;
+  @ViewChild('downloadLink')
+  downloadLink!: ElementRef;
 
   constructor(
     private tratamientoService: TratamientoService,
@@ -75,7 +83,6 @@ export class DiagnosticoCrudComponent implements OnInit {
         break;
 
       case 'update':
-        this.getVetIdDiagnostico();
         this.mCreate = false;
         this.mDelete = false;
         this.mUpdate = true;
@@ -201,7 +208,9 @@ export class DiagnosticoCrudComponent implements OnInit {
       .subscribe((v) => {
         this.data.veterinario = v;
         this.nombreVet = this.data.veterinario.nombre;
-        this.selectedValueVet = this.nombreVet;
+        if(!this.selectedValueVet) {
+          this.selectedValueVet = v.id;
+        }
       });
   }
 
@@ -214,5 +223,15 @@ export class DiagnosticoCrudComponent implements OnInit {
       data.mascota = this.mascota;
       this.dialogRef.close(data);
     }
+  }
+
+  imprimirPdf(data: Diagnostico) {
+    console.log(data);
+    html2canvas(this.screen.nativeElement).then(canvas => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.downloadLink.nativeElement.href = canvas.toDataURL('file/pdf');
+      this.downloadLink.nativeElement.download = 'diagnostico.png';
+      this.downloadLink.nativeElement.click();
+    });
   }
 }

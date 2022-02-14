@@ -1,156 +1,107 @@
-<div
-*ngIf="!mDelete">
-  <h1 *ngIf="mCreate" class="title" mat-dialog-title>Nuevo diagnostico</h1>
-  <h1 *ngIf="mUpdate" class="title"  mat-dialog-title>Editar diagnostico</h1>
-  <h1 *ngIf="mDetail" class="title"  mat-dialog-title>Resumen de datos</h1>
+<div *ngIf="!mDelete">
+  <div #screen>
+    <h1 *ngIf="mCreate" class="title" mat-dialog-title>Nuevo diagnostico</h1>
+    <h1 *ngIf="mUpdate" class="title" mat-dialog-title>Editar diagnostico</h1>
+    <h1 *ngIf="mDetail" class="title" mat-dialog-title>Resumen de datos</h1>
+    <div mat-dialog-content>
+      <div class="dialogCase">
+        <button mat-mini-fab color="basic" aria-label="Example icon button with
+          a
+          plus one icon" (click)="imprimirPdf(data)">
+          <i class="material-icons">print</i>
+        </button>
 
-  <div mat-dialog-content>
-    <div class="dialogCase"
-      
-    >
-      <!-- <mat-form-field 
-      *ngIf="mDetail">
-        <input
-          matInput
-          [(ngModel)]="data.id"
-          type="number"
-          placeholder="Código..."
-          [readonly]="mDetail"
-        />
-      </mat-form-field> -->
-      
-      <mat-form-field>
-        <input
-          matInput
-          [(ngModel)]="data.fecha"
-          type="text"
-          placeholder="Fecha"
-          [readonly]="mDetail || mUpdate"
-        />
-      </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="data.fecha"
+            type="text"
+            placeholder="Fecha"
+            [readonly]="mDetail || mUpdate"
+            />
+        </mat-form-field>
 
-      <!-- <mat-form-field>
-        <input
-          matInput
-          [(ngModel)]="data.estado"
-          type="text"
-          placeholder="Estado..."
-          [readonly]="mDetail"
-        />
-      </mat-form-field> -->
+        <mat-form-field>
+          <mat-label>Estado</mat-label>
+          <mat-select
+            *ngIf="mCreate || mUpdate"
+            [(ngModel)]="estadoSelected"
+            name="estado"
+            id="estado">
+            <mat-option *ngFor="let es of estado" [value]="es.name">
+              {{ es.name }}
+            </mat-option>
+          </mat-select>
 
+          <input
+            matInput
+            *ngIf="mDetail"
+            [(ngModel)]="data.estado"
+            type="text"
+            [readonly]="mDetail"
+            />
+        </mat-form-field>
 
-      <mat-form-field >
-        <mat-label>Estado</mat-label>
-         <mat-select
-           *ngIf="mCreate || mUpdate"
-           [(ngModel)]="estadoSelected"
-           name="estado"
-           id="estado">
-           <mat-option *ngFor="let es of estado" [value]="es.name">
-             {{ es.name }}
-           </mat-option>
-         </mat-select>
- 
-         <input
-           matInput
-           *ngIf="mDetail"
-           [(ngModel)]="data.estado"
-           type="text"
-           [readonly]="mDetail"
-         />
-       </mat-form-field> 
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="data.enfermedad"
+            type="text"
+            placeholder="Diagnostico"
+            [readonly]="mDetail"
+            />
+        </mat-form-field>
 
+        <mat-form-field appearance="fill">
+          <mat-label>Tratamiento</mat-label>
+          <mat-select
+            *ngIf="mCreate"
+            [(ngModel)]="selectedValueTrat"
+            name="tratamiento"
+            id="tratamiento">
+            <mat-option *ngFor="let trat of tratamiento" [value]="trat.detalle">
+              {{ trat.detalle }}
+            </mat-option>
+          </mat-select>
 
+          <input
+            matInput
+            [(ngModel)]="data.tratamiento"
+            type="text"
+            placeholder="Tratamiento"
+            [readonly]="mDetail || mUpdate"
+            />
+        </mat-form-field>
 
+        <mat-form-field appearance="fill">
+          <mat-label>Veterinario</mat-label>
 
+          <mat-select
+            *ngIf="mCreate || mUpdate"
+            [(ngModel)]="selectedValueVet"
+            name="veterinario"
+            id="veterinario">
+            <mat-option *ngFor="let vet of veterinario" [value]="vet.id">
+              {{ vet.nombre }}
+            </mat-option>
+          </mat-select>
 
-
-
-
-
-
-
-
-
-
-      <mat-form-field>
-        <input
-          matInput
-          [(ngModel)]="data.enfermedad"
-          type="text"
-          placeholder="Diagnostico"
-          [readonly]="mDetail"
-        />
-      </mat-form-field>
-
-    <mat-form-field appearance="fill">
-       <mat-label>Tratamiento</mat-label>
-        <mat-select
-          *ngIf="mCreate"
-          [(ngModel)]="selectedValueTrat"
-          name="tratamiento"
-          id="tratamiento">
-          <mat-option *ngFor="let trat of tratamiento" [value]="trat.detalle">
-            {{ trat.detalle }}
-          </mat-option>
-        </mat-select>
-
-        <input
-          matInput
-          [(ngModel)]="data.tratamiento"
-          type="text"
-          placeholder="Tratamiento"
-          [readonly]="mDetail || mUpdate"
-        />
-      </mat-form-field> 
-
-      <!-- <mat-form-field *ngIf="mDetail">
-        <input
-          matInput
-          *ngIf="mDetail"
-          [value]="nombreVet"
-          type="text"
-          placeholder="Veterinario..."
-          [readonly]="mDetail"
-        />
-      </mat-form-field> -->
-
-      
-
- 
-    <mat-form-field appearance="fill">
-        <mat-label>Veterinario</mat-label>
-
-        <mat-select
-          *ngIf="mCreate || mUpdate"
-          [(ngModel)]="selectedValueVet"
-          name="veterinario"
-          id="veterinario">
-          <mat-option *ngFor="let vet of veterinario" [value]="vet.id">
-            {{ vet.nombre }}
-          </mat-option>
-        </mat-select> 
-
-        <input
-          matInput
-          *ngIf="mDetail"
-          type="text"
-          [value]="nombreVet"
-          [placeholder]="nombreVet"
-          readonly
-        /> 
-      </mat-form-field> 
-
-
+          <input
+            matInput
+            *ngIf="mDetail"
+            type="text"
+            [value]="nombreVet"
+            [placeholder]="nombreVet"
+            readonly
+            />
+        </mat-form-field>
+      </div>
     </div>
   </div>
+
   <div mat-dialog-actions>
     <button mat-button (click)="cancelar()">Cancelar</button>
     <button mat-button (click)="submit(data)" cdkFocusInitial>
-
-      <!-- [mat-dialog-close]="data" -->
-
       Confirmar
     </button>
   </div>
@@ -159,18 +110,17 @@
 
 <!-- borrado -->
 <div
-*ngIf="mDelete">
+  *ngIf="mDelete">
   <h1 mat-dialog-title>Se va a confirmar el borrado de:</h1>
   <div mat-dialog-content>
-    <div class="dialogCase"
-    >
+    <div class="dialogCase">
       <mat-form-field>
         <input
           matInput
           [(ngModel)]="data.enfermedad"
           type="text"
           readonly
-        />
+          />
       </mat-form-field>
     </div>
   </div>
@@ -182,4 +132,7 @@
   </div>
 </div>
 
-
+<div id="download">
+  <img #canvas>
+  <a #downloadLink></a>
+</div>

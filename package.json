@@ -26,6 +26,7 @@
     "angular-material-event-calendar": "^0.1.4",
     "data-service": "^1.5.5",
     "daypilot-pro-angular": "https://npm.daypilot.org/daypilot-pro-angular/trial/2022.1.5219.tar.gz",
+    "html2canvas": "^1.4.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
