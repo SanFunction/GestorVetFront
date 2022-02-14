@@ -22,7 +22,7 @@ import { VeterinarioCreateComponent } from 'src/app/components/veterinario-creat
 })
 export class VeterinarioComponent implements OnInit {
   veterinarios: Veterinario[];
-  displayedColumns = ['id', 'nombre', 'apellidos', 'action'];
+  displayedColumns = ['nombre', 'apellidos', 'action'];
   nuevoVet: Veterinario;
   editVet: Veterinario;
   modal: string;
