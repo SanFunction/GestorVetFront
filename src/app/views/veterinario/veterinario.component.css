@@ -7,7 +7,7 @@ table {
   text-align: center;
 }
 table th {
-    text-align: center;
+  text-align: center;
 }
 
 .mat-elevation-z4 {
@@ -22,7 +22,7 @@ table th {
   cursor: "pointer";
 }
 
-.footer{
+.footer {
   padding: 15px;
   text-align: center;
 }

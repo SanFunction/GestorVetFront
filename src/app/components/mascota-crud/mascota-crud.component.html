@@ -5,26 +5,18 @@
 
   <div mat-dialog-content>
     <div class="dialogCase">
-      <img 
-      *ngIf="mDetail || mUpdate" 
-      matPrefix src="{{'http://localhost:8080/mascotas/'+ data.foto}}" 
-      width="130px" 
-      style="border-radius:50%; margin:0 auto 25px auto"
-      >
-
-      <!-- <mat-form-field *ngIf="mUpdate || mDetail">
-        <input
-          matInput
-          [(ngModel)]="data.id"
-          type="number"
-          [readonly]="mDetail"
-        />
-      </mat-form-field> -->
-
+      <img
+        *ngIf="mDetail || mUpdate"
+        matPrefix
+        src="{{ 'http://localhost:8080/mascotas/' + data.foto }}"
+        width="130px"
+        style="border-radius: 50%; margin: 0 auto 25px auto"
+      />
+      
       <mat-form-field>
         <input
           matInput
-          style="padding-top:1px"
+          style="padding-top: 1px"
           [(ngModel)]="data.nombre"
           type="text"
           id="nombre"
@@ -103,28 +95,26 @@
       <mat-form-field *ngIf="mCreate || mUpdate">
         <div>
           <mat-toolbar>
-            <div style="display:flex">
-            <input
-              matInput
-              readonly
-              name="foto"
-              id="fileUpload"
-              style="font-size: medium"
-              [(ngModel)]="selectedFile"
-              
-            />
-            <button 
-            mat-stroked-button color="primary"
-            style=" display: block;
-            width: 50px;
-            height: 40px;"
-            (click)="fileInput.click()">
-            
-            <i class="material-icons">search</i>
-          </button>
-          </div>
+            <div style="display: flex">
+              <input
+                matInput
+                readonly
+                name="foto"
+                id="fileUpload"
+                style="font-size: medium"
+                [(ngModel)]="selectedFile"
+              />
+              <button
+                mat-stroked-button
+                color="primary"
+                style="display: block; width: 50px; height: 40px"
+                (click)="fileInput.click()"
+              >
+                <i class="material-icons">search</i>
+              </button>
+            </div>
           </mat-toolbar>
-         
+
           <input
             type="file"
             #fileInput
@@ -135,8 +125,6 @@
           />
         </div>
       </mat-form-field>
-
-
     </div>
   </div>
   <div mat-dialog-actions>
@@ -145,7 +133,6 @@
   </div>
 </div>
 
-<!-- borrado -->
 <div *ngIf="mDelete">
   <h1 mat-dialog-title>Se va a confirmar el borrado de:</h1>
   <div mat-dialog-content>

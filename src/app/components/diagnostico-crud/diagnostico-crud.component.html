@@ -1,24 +1,10 @@
-<div
-*ngIf="!mDelete">
+<div *ngIf="!mDelete">
   <h1 *ngIf="mCreate" class="title" mat-dialog-title>Nuevo diagnostico</h1>
-  <h1 *ngIf="mUpdate" class="title"  mat-dialog-title>Editar diagnostico</h1>
-  <h1 *ngIf="mDetail" class="title"  mat-dialog-title>Resumen de datos</h1>
+  <h1 *ngIf="mUpdate" class="title" mat-dialog-title>Editar diagnostico</h1>
+  <h1 *ngIf="mDetail" class="title" mat-dialog-title>Resumen de datos</h1>
 
   <div mat-dialog-content>
-    <div class="dialogCase"
-      
-    >
-      <!-- <mat-form-field 
-      *ngIf="mDetail">
-        <input
-          matInput
-          [(ngModel)]="data.id"
-          type="number"
-          placeholder="Código..."
-          [readonly]="mDetail"
-        />
-      </mat-form-field> -->
-      
+    <div class="dialogCase">
       <mat-form-field>
         <input
           matInput
@@ -39,40 +25,27 @@
         />
       </mat-form-field> -->
 
-
-      <mat-form-field >
+      <mat-form-field>
         <mat-label>Estado</mat-label>
-         <mat-select
-           *ngIf="mCreate || mUpdate"
-           [(ngModel)]="estadoSelected"
-           name="estado"
-           id="estado">
-           <mat-option *ngFor="let es of estado" [value]="es.name">
-             {{ es.name }}
-           </mat-option>
-         </mat-select>
- 
-         <input
-           matInput
-           *ngIf="mDetail"
-           [(ngModel)]="data.estado"
-           type="text"
-           [readonly]="mDetail"
-         />
-       </mat-form-field> 
+        <mat-select
+          *ngIf="mCreate || mUpdate"
+          [(ngModel)]="estadoSelected"
+          name="estado"
+          id="estado"
+        >
+          <mat-option *ngFor="let es of estado" [value]="es.name">
+            {{ es.name }}
+          </mat-option>
+        </mat-select>
 
-
-
-
-
-
-
-
-
-
-
-
-
+        <input
+          matInput
+          *ngIf="mDetail"
+          [(ngModel)]="data.estado"
+          type="text"
+          [readonly]="mDetail"
+        />
+      </mat-form-field>
 
       <mat-form-field>
         <input
@@ -84,13 +57,14 @@
         />
       </mat-form-field>
 
-    <mat-form-field appearance="fill">
-       <mat-label>Tratamiento</mat-label>
+      <mat-form-field appearance="fill">
+        <mat-label>Tratamiento</mat-label>
         <mat-select
           *ngIf="mCreate"
           [(ngModel)]="selectedValueTrat"
           name="tratamiento"
-          id="tratamiento">
+          id="tratamiento"
+        >
           <mat-option *ngFor="let trat of tratamiento" [value]="trat.detalle">
             {{ trat.detalle }}
           </mat-option>
@@ -103,34 +77,21 @@
           placeholder="Tratamiento"
           [readonly]="mDetail || mUpdate"
         />
-      </mat-form-field> 
+      </mat-form-field>
 
-      <!-- <mat-form-field *ngIf="mDetail">
-        <input
-          matInput
-          *ngIf="mDetail"
-          [value]="nombreVet"
-          type="text"
-          placeholder="Veterinario..."
-          [readonly]="mDetail"
-        />
-      </mat-form-field> -->
-
-      
-
- 
-    <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill">
         <mat-label>Veterinario</mat-label>
 
         <mat-select
           *ngIf="mCreate || mUpdate"
           [(ngModel)]="selectedValueVet"
           name="veterinario"
-          id="veterinario">
+          id="veterinario"
+        >
           <mat-option *ngFor="let vet of veterinario" [value]="vet.id">
             {{ vet.nombre }}
           </mat-option>
-        </mat-select> 
+        </mat-select>
 
         <input
           matInput
@@ -139,16 +100,13 @@
           [value]="nombreVet"
           [placeholder]="nombreVet"
           readonly
-        /> 
-      </mat-form-field> 
-
-
+        />
+      </mat-form-field>
     </div>
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="cancelar()">Cancelar</button>
     <button mat-button (click)="submit(data)" cdkFocusInitial>
-
       <!-- [mat-dialog-close]="data" -->
 
       Confirmar
@@ -156,21 +114,13 @@
   </div>
 </div>
 
-
 <!-- borrado -->
-<div
-*ngIf="mDelete">
+<div *ngIf="mDelete">
   <h1 mat-dialog-title>Se va a confirmar el borrado de:</h1>
   <div mat-dialog-content>
-    <div class="dialogCase"
-    >
+    <div class="dialogCase">
       <mat-form-field>
-        <input
-          matInput
-          [(ngModel)]="data.enfermedad"
-          type="text"
-          readonly
-        />
+        <input matInput [(ngModel)]="data.enfermedad" type="text" readonly />
       </mat-form-field>
     </div>
   </div>
@@ -181,5 +131,3 @@
     </button>
   </div>
 </div>
-
-

@@ -54,8 +54,6 @@ export class MascotaService {
     );
   }
 
-
-
   update(mascota: Mascota): Observable<Mascota> {
     const url = `${this.baseUrl}/${mascota.id}`;
     return this.http.put<Mascota>(url, mascota).pipe(

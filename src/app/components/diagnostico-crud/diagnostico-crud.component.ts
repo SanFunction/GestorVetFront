@@ -22,7 +22,7 @@ export class DiagnosticoCrudComponent implements OnInit {
   estado: any[];
   selectedValueTrat: any = '';
   selectedValueVet: any = '';
-  estadoSelected: any ='';
+  estadoSelected: any = '';
   valorModal: any;
   veterinario: Veterinario[];
   tratamiento: Tratamiento[];
@@ -49,18 +49,16 @@ export class DiagnosticoCrudComponent implements OnInit {
     this.mascota = {
       id: Number(this.id),
     };
-    
-    this.estado =[
-      {name:'En curso',id:2},
-      {name:'Cerrado',id:3},
-      {name:'Re-abierto',id:4},
-      {name:'Apertura',id:1}
-    ]
-   
+
+    this.estado = [
+      { name: 'En curso', id: 2 },
+      { name: 'Cerrado', id: 3 },
+      { name: 'Re-abierto', id: 4 },
+      { name: 'Apertura', id: 1 },
+    ];
   }
 
   ngOnInit(): void {
-  
     switch (this.valorModal) {
       case 'create':
         this.mCreate = true;
@@ -70,7 +68,6 @@ export class DiagnosticoCrudComponent implements OnInit {
         this.comboVeterinario();
         this.comboTratamientos();
         this.data.mascota = this.mascota;
-
 
         break;
 
@@ -101,7 +98,7 @@ export class DiagnosticoCrudComponent implements OnInit {
         this.mUpdate = false;
         this.mDetail = true;
         this.getVetIdDiagnostico();
-        
+
         break;
     }
   }
@@ -116,7 +113,6 @@ export class DiagnosticoCrudComponent implements OnInit {
       .pipe(take(1))
       .subscribe((data) => {
         this.veterinario = data;
-        // this.loading = false
       });
   }
 
@@ -126,7 +122,6 @@ export class DiagnosticoCrudComponent implements OnInit {
       .pipe(take(1))
       .subscribe((data) => {
         this.tratamiento = data;
-        // this.loading = false
       });
   }
 
@@ -201,15 +196,14 @@ export class DiagnosticoCrudComponent implements OnInit {
       .subscribe((v) => {
         this.data.veterinario = v;
         this.nombreVet = this.data.veterinario.nombre;
-        if(!this.selectedValueVet){
+        if (!this.selectedValueVet) {
           this.selectedValueVet = v.id;
         }
-        
       });
   }
 
   submit(data: Diagnostico) {
-    data.veterinario = {id:this.selectedValueVet };
+    data.veterinario = { id: this.selectedValueVet };
     data.estado = this.estadoSelected;
     data.tratamiento = this.selectedValueTrat;
     if (this.validar(data)) {

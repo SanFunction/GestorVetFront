@@ -9,6 +9,8 @@ import { MascotaComponent } from "./views/mascota/mascota.component";
 import { TratamientoComponent } from "./views/tratamiento/tratamiento.component";
 import { DiagnosticoComponent } from "./views/diagnostico/diagnostico.component";
 import { VeterinarioComponent } from "./views/veterinario/veterinario.component";
+import { LogInComponent } from "./views/log-in/log-in.component";
+import { UserviewComponent } from "./views/userview/userview.component";
 
 
 const routes: Routes = [
@@ -16,6 +18,10 @@ const routes: Routes = [
     path: "",
     component: HomeComponent
   },
+  // {
+  //   path: "userView",
+  //   component: UserviewComponent
+  // },
   {
     path: "cita",
     component: CitaComponent
@@ -40,6 +46,37 @@ const routes: Routes = [
     path: "mascota",
     component: MascotaComponent
   },
+    // TODO: Uncomment when logIn were repaired
+  // {
+  //   path: "",
+  //   component: LogInComponent
+  // },
+   // {
+  //   path: "redirect",
+  //   component: RedirectComponent,
+  //   children:[
+  //  {
+  //   path: "cliente",
+  //   component: ClienteComponent
+  // },
+  // {
+  //   path: "veterinario",
+  //   component: VeterinarioComponent
+  // },
+  // {
+  //   path: "diagnostico",
+  //   component: DiagnosticoComponent
+  // },
+  // {
+  //   path: "tratamiento",
+  //   component: TratamientoComponent
+  // },
+  // {
+  //   path: "mascota",
+  //   component: MascotaComponent
+  // },
+  //]
+  // },
 
 ];
 

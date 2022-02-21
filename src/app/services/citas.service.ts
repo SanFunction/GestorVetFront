@@ -25,7 +25,6 @@ export class CitaService {
   }
 
   create(cita: any): Observable<Cita> {
-    
     return this.http.post<Cita>(this.baseUrl, cita).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
@@ -38,8 +37,6 @@ export class CitaService {
       catchError((e) => this.errorHandler(e))
     );
   }
-
-
 
   readById(id: any): Observable<Cita> {
     const url = `${this.baseUrl}/${id}`;

@@ -5,22 +5,20 @@ import { EMPTY, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Tratamiento } from '../models/tratamiento.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TratamientoService {
-
-  baseUrl = "http://localhost:8080/tratamiento";
+  baseUrl = 'http://localhost:8080/tratamiento';
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 
   showMessage(msg: string, isError: boolean = false): void {
-    this.snackBar.open(msg, "X", {
+    this.snackBar.open(msg, 'X', {
       duration: 3000,
-      horizontalPosition: "right",
-      verticalPosition: "top",
-      panelClass: isError ? ["msg-error"] : ["msg-success"],
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: isError ? ['msg-error'] : ['msg-success'],
     });
   }
 
@@ -63,7 +61,7 @@ export class TratamientoService {
   }
 
   errorHandler(e: any): Observable<any> {
-    this.showMessage("Ocurrio un error", true);
+    this.showMessage('Ocurrio un error', true);
     return EMPTY;
   }
 }

@@ -52,11 +52,11 @@ export class TratamientoComponent implements OnInit {
     this.modal = '';
 
     const dialogo1 = this.dialog.open(TratamientoCrudComponent, {
-      data: (this.nuevoTratamiento = { 
+      data: (this.nuevoTratamiento = {
         // id: null,
-         detalle: '', 
-         precio: '',
-        }),
+        detalle: '',
+        precio: '',
+      }),
     });
 
     dialogo1.afterClosed().subscribe((tratam) => {
@@ -100,12 +100,7 @@ export class TratamientoComponent implements OnInit {
         } else {
           this.cargarList();
         }
-      } catch (error) {
-        
-      }
-
-
-      
+      } catch (error) {}
     });
   }
 
@@ -140,20 +135,16 @@ export class TratamientoComponent implements OnInit {
           this.router.navigate(['/tratamiento']);
           this.cargarList();
         });
-      }else {
+      } else {
         this.cargarList();
       }
     });
   }
 
-
- cargarList(){
-  this.tratamientoService.read().subscribe((dg) => {
-    this.tratamientos = dg;
-    this.loading = false;
-  });
-  
- }
-
-
-} //
+  cargarList() {
+    this.tratamientoService.read().subscribe((dg) => {
+      this.tratamientos = dg;
+      this.loading = false;
+    });
+  }
+} 

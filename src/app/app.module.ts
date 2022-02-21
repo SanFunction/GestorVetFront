@@ -53,6 +53,9 @@ import { VeterinarioCreateComponent } from './components/veterinario-create/vete
 import { TratamientoCrudComponent } from './components/tratamiento-crud/tratamiento-crud.component';
 import { DiagnosticoCrudComponent } from './components/diagnostico-crud/diagnostico-crud.component';
 import { VeterinarioComponent } from './views/veterinario/veterinario.component';
+import { LogInComponent } from './views/log-in/log-in.component';
+import { RedirectComponent } from './views/redirect/redirect.component';
+import { UserviewComponent } from './views/userview/userview.component';
 
 
 
@@ -76,7 +79,10 @@ registerLocaleData(localePt);
     MascotaCrudComponent,
     VeterinarioCreateComponent,
     TratamientoCrudComponent,
-    DiagnosticoCrudComponent
+    DiagnosticoCrudComponent,
+    LogInComponent,
+    RedirectComponent,
+    UserviewComponent
 
   ],
   imports: [
@@ -105,6 +111,7 @@ registerLocaleData(localePt);
     FormsModule,
     MatProgressSpinnerModule,
     MatSelectModule
+    
     // CalendarModule
   ],
   providers: [{

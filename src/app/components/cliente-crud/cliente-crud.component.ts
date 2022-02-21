@@ -32,7 +32,7 @@ export class ClienteCrudComponent implements OnInit {
     this.valorModal = '';
 
     this.valorModal = sessionStorage.getItem('modal');
-    
+
     this.data = { ...data };
   }
 
@@ -105,4 +105,4 @@ export class ClienteCrudComponent implements OnInit {
       this.dialogRef.close(data);
     }
   }
-} //clase
+}

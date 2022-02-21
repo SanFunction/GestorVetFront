@@ -20,7 +20,6 @@ export class ClienteComponent implements OnInit {
   nuevoCliente: Cliente;
   editCliente: Cliente;
   modal: string;
-  // idCliente: string;
   loading: boolean;
 
   constructor(
@@ -154,10 +153,8 @@ export class ClienteComponent implements OnInit {
   }
 
   navigateToMascotaCrud(client: Cliente): void {
-
     sessionStorage.setItem('idCliente', client.id!.toString());
-
 
     this.router.navigate(['/mascota']);
   }
-} //clase
+} 

@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
-
+import { User } from '../models/user.model';
 import { Observable, EMPTY } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { Veterinario } from '../models/veterinario.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VeterinarioService {
-  baseUrl = 'http://localhost:8080/veterinario';
+export class UserService {
+  baseUrl = 'http://localhost:8080/user';
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 
@@ -23,43 +22,43 @@ export class VeterinarioService {
     });
   }
 
-  create(veterinario: Veterinario): Observable<Veterinario> {
-    return this.http.post<Veterinario>(this.baseUrl, veterinario).pipe(
+  create(user: User): Observable<User> {
+    return this.http.post<User>(this.baseUrl, user).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );
   }
 
-  read(): Observable<Veterinario[]> {
-    return this.http.get<Veterinario[]>(this.baseUrl).pipe(
+  read(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );
   }
 
-  public getAllVet(): Observable<any[]> {
-    return this.http.get<Veterinario[]>(`${this.baseUrl}`);
+  readCombo(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl);
   }
 
-  readById(id: number): Observable<Veterinario> {
+  readById(id: any): Observable<User> {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.get<Veterinario>(url).pipe(
+    return this.http.get<User>(url).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );
   }
 
-  update(veterinario: Veterinario): Observable<Veterinario> {
-    const url = `${this.baseUrl}/${veterinario.id}`;
-    return this.http.put<Veterinario>(url, veterinario).pipe(
+  update(user: User): Observable<User> {
+    const url = `${this.baseUrl}/${user.id}`;
+    return this.http.put<User>(url, user).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );
   }
 
-  delete(id: number): Observable<Veterinario> {
+  delete(id: number): Observable<User> {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.delete<Veterinario>(url).pipe(
+    return this.http.delete<User>(url).pipe(
       map((obj) => obj),
       catchError((e) => this.errorHandler(e))
     );

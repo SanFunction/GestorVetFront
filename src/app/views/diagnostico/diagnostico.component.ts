@@ -97,10 +97,6 @@ export class DiagnosticoComponent implements OnInit {
     sessionStorage.removeItem('modal');
     sessionStorage.setItem('modal', this.modal);
     this.modal = '';
-    // this.diagnosticoService.getVetporIdDiagnostico(diag.id).subscribe((v) => {
-    //   diag.veterinario = v;
-    // });
-
     this.editDiagnostico = diag;
     const dialogo1 = this.dialog.open(DiagnosticoCrudComponent, {
       data: this.editDiagnostico,
@@ -167,7 +163,6 @@ export class DiagnosticoComponent implements OnInit {
       .pipe(take(1))
       .subscribe((data) => {
         this.comboVeterinario = data;
-        // this.loading = false
       });
   }
 
@@ -185,13 +180,11 @@ export class DiagnosticoComponent implements OnInit {
 
         element['fecha'] = `${dia}/${mes}/${anio}`;
       });
-    }); // servicio
+    }); 
     this.loading = false;
-  } // funcion carga
+  } 
 
   navigateToMascotaCrud(diag: Diagnostico): void {
-
-
     this.router.navigate(['/mascota/{id}']);
   }
 }

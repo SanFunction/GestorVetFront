@@ -1,4 +1,3 @@
-import { StringMapWithRename } from "@angular/compiler/src/compiler_facade_interface";
 import { Cliente } from "./cliente.model";
 import { Diagnostico } from "./diagnostico.model";
 

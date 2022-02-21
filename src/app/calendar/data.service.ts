@@ -13,30 +13,8 @@ import { Cliente } from '../models/cliente.model';
 export class DataService {
 
   baseUrl = 'http://localhost:8080/cita';
-
-  // citas: any[];
-  
   events: any[] = [
-    // {
-    //   id: 1,
-    //   start: DayPilot.Date.today().addHours(10),
-    //   end: DayPilot.Date.today().addHours(12),
-    //   text: "Cita 1"
-    // },
-    // {
-    //   id: 2,
-    //   start: DayPilot.Date.today().addHours(10),
-    //   end: DayPilot.Date.today().addHours(12),
-    //   text: "Cita 2"
-    // },
-    // {
-    //   id:3,
-    //   start: DayPilot.Date.fromYearMonthDay(2022,2,12).addHours(9),
-    //   end:DayPilot.Date.fromYearMonthDay(2022,2,12).addHours(10),
-    //   text:"Cita 3"
-    // }
   ];
-
 
   constructor(
     private snackBar: MatSnackBar,
@@ -49,10 +27,6 @@ export class DataService {
       icon: 'storefront',
       routeUrl: '/cita',
     };
-    // this.citas = [];
-    // this.citas2 = [];
-
-
   }
 
   showMessage(msg: string, isError: boolean = false): void {
@@ -66,19 +40,15 @@ export class DataService {
 
 
   getEvents(from: DayPilot.Date, to: DayPilot.Date): Observable<any[]> {
-    // simulating an HTTP request
     return new Observable((observer) => {
       setTimeout(() => {
         observer.next(this.events);
       }, 50);
     });
-
-    // return this.http.get("/api/events?from=" + from.toString() + "&to=" + to.toString());
   }
 
 
   read(from: DayPilot.Date, to: DayPilot.Date): Observable<any[]> {
     return this.http.get<Cita[]>(this.baseUrl);
   }
-
-} //
+} 

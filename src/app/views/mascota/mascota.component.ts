@@ -16,7 +16,14 @@ import { DiagnosticoService } from 'src/app/services/diagnostico.service';
 })
 export class MascotaComponent implements OnInit {
   mascotas: Mascota[];
-  displayedColumns = ['avatar','nombre', 'especie', 'edad', 'historial', 'action'];
+  displayedColumns = [
+    'avatar',
+    'nombre',
+    'especie',
+    'edad',
+    'historial',
+    'action',
+  ];
   nuevoMascota: Mascota;
   editMascota: Mascota;
   modal: string;
@@ -72,19 +79,18 @@ export class MascotaComponent implements OnInit {
 
     dialogo1.afterClosed().subscribe((mascota) => {
       this.loading = true;
-    
+
       try {
-        if(mascota){
-         mascota.id = null;
-        this.mascotaService.create(mascota).subscribe(() => {
-          this.mascotaService.showMessage('Creado con éxito!');
-          this.router.navigate(['/mascota']);
-          this.cargarList();
-        }); 
-        }else {
+        if (mascota) {
+          mascota.id = null;
+          this.mascotaService.create(mascota).subscribe(() => {
+            this.mascotaService.showMessage('Creado con éxito!');
+            this.router.navigate(['/mascota']);
+            this.cargarList();
+          });
+        } else {
           this.cargarList();
         }
-        
       } catch (error) {}
     });
   }
@@ -101,7 +107,6 @@ export class MascotaComponent implements OnInit {
     });
 
     dialogo1.afterClosed().subscribe((mascota) => {
-     
       this.loading = true;
       try {
         if (mascota) {
@@ -155,7 +160,6 @@ export class MascotaComponent implements OnInit {
   }
 
   cargarList() {
-  
     this.idCliente = sessionStorage.getItem('idCliente');
     this.nuevoMascota.cliente = this.idCliente;
 
@@ -168,10 +172,9 @@ export class MascotaComponent implements OnInit {
   }
 
   navigateToDiagnosticoCrud(mascot: Mascota): void {
-
     this.idMascota = mascot.id!.toString();
     sessionStorage.setItem('idMascota', this.idMascota);
 
     this.router.navigate(['/diagnostico']);
   }
-} //class
+} 

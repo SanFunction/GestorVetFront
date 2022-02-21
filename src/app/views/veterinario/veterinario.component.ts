@@ -155,11 +155,4 @@ export class VeterinarioComponent implements OnInit {
     });
   }
 
-  // agregar(vet: Veterinario) {
-  //   this.veterinarios.push(this.nuevoVet);
-  // }
-
-  // update(vet: Veterinario) {
-  //   this.veterinarios.push(this.nuevoVet);
-  // }
 }

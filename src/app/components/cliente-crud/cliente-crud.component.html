@@ -1,24 +1,10 @@
-<div
-*ngIf="!mDelete">
+<div *ngIf="!mDelete">
   <h1 *ngIf="mCreate" class="title" mat-dialog-title>Nuevo cliente</h1>
-  <h1 *ngIf="mUpdate" class="title"  mat-dialog-title>Editar cliente</h1>
-  <h1 *ngIf="mDetail" class="title"  mat-dialog-title>Resumen de datos</h1>
+  <h1 *ngIf="mUpdate" class="title" mat-dialog-title>Editar cliente</h1>
+  <h1 *ngIf="mDetail" class="title" mat-dialog-title>Resumen de datos</h1>
 
   <div mat-dialog-content id="form">
-    <div class="dialogCase"
-      
-    >
-      <!-- <mat-form-field 
-      *ngIf="mDetail">
-        <input
-          matInput
-          [(ngModel)]="data.id"
-          type="number"
-          placeholder="Código..."
-         
-        />
-      </mat-form-field> -->
-
+    <div class="dialogCase">
       <mat-form-field>
         <input
           matInput
@@ -54,25 +40,18 @@
           [readonly]="mDetail"
         />
       </mat-form-field>
-
     </div>
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="cancelar()">Cancelar</button>
-    <button mat-button (click) ="submit(data)" cdkFocusInitial>
-      Confirmar
-    </button>
+    <button mat-button (click)="submit(data)" cdkFocusInitial>Confirmar</button>
   </div>
 </div>
 
-
-<!-- borrado -->
-<div
-*ngIf="mDelete">
+<div *ngIf="mDelete">
   <h1 mat-dialog-title>Se va a confirmar el borrado de:</h1>
   <div mat-dialog-content>
-    <div class="dialogCase"
-    >
+    <div class="dialogCase">
       <mat-form-field>
         <input
           matInput
@@ -90,4 +69,3 @@
     </button>
   </div>
 </div>
-

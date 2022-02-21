@@ -6,23 +6,21 @@ import { catchError, map } from 'rxjs/operators';
 import { Diagnostico } from '../models/diagnostico.model';
 import { Veterinario } from '../models/veterinario.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DiagnosticoService {
-  baseUrl = "http://localhost:8080/diagnostico";
-
-  baseUrl2 = "http://localhost:8080/diagnostico/veterinario";
+  baseUrl = 'http://localhost:8080/diagnostico';
+  baseUrl2 = 'http://localhost:8080/diagnostico/veterinario';
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) {}
 
   showMessage(msg: string, isError: boolean = false): void {
-    this.snackBar.open(msg, "X", {
+    this.snackBar.open(msg, 'X', {
       duration: 3000,
-      horizontalPosition: "right",
-      verticalPosition: "top",
-      panelClass: isError ? ["msg-error"] : ["msg-success"],
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: isError ? ['msg-error'] : ['msg-success'],
     });
   }
 
@@ -33,7 +31,7 @@ export class DiagnosticoService {
     );
   }
 
-  getVetporIdDiagnostico(id:any):Observable<Veterinario>{
+  getVetporIdDiagnostico(id: any): Observable<Veterinario> {
     const url2 = `${this.baseUrl2}/${id}`;
     return this.http.get<Veterinario>(url2).pipe(
       map((obj) => obj),
@@ -73,7 +71,7 @@ export class DiagnosticoService {
   }
 
   errorHandler(e: any): Observable<any> {
-    this.showMessage("Ocurrio un error", true);
+    this.showMessage('Ocurrio un error', true);
     return EMPTY;
   }
 }

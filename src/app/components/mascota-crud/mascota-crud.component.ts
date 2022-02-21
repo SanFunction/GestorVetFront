@@ -1,4 +1,10 @@
-import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { take } from 'rxjs';
 import { Especie } from 'src/app/models/especie.model';
@@ -13,13 +19,12 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
   styleUrls: ['./mascota-crud.component.css'],
 })
 export class MascotaCrudComponent implements OnInit {
-  
   mCreate: boolean;
   mUpdate: boolean;
   mDelete: boolean;
   mDetail: boolean;
   selectedValue: any = '';
-  selectedFile: any ='Sin foto';
+  selectedFile: any = 'Sin foto';
   valorModal: any;
   especie: Especie[];
   idCliente: number;
@@ -93,11 +98,9 @@ export class MascotaCrudComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  
-  onFileChanged(event:any) {
+  onFileChanged(event: any) {
     this.selectedFile = event.target.files.item(0);
   }
-
 
   validar(data: Mascota): boolean {
     if (data.nombre == '' || data.nombre == null) {
@@ -127,33 +130,39 @@ export class MascotaCrudComponent implements OnInit {
     return true;
   }
 
+  //TODO: Refactor uploadFile function
   submit(data: Mascota) {
     const baseUrl = 'http://localhost:8080';
 
-    if(this.selectedFile == null || this.selectedFile =='' || this.selectedFile=='Sin foto'){
-
+    if (
+      this.selectedFile == null ||
+      this.selectedFile == '' ||
+      this.selectedFile == 'Sin foto'
+    ) {
       this.selectedFile.name = 'paw.jpg';
-
     } else {
       const file: File | null = this.selectedFile;
-      if (file) {
+      if (file && file instanceof File) {
         const formData: FormData = new FormData();
         formData.append('file', file);
         const req = new HttpRequest('POST', `${baseUrl}/upload`, formData, {
           reportProgress: true,
-          responseType: 'json'
+          responseType: 'json',
         });
 
         this.http.request(req).subscribe((data) => {
           console.log(data);
-        })
+        });
       }
     }
-    data.foto = this.selectedFile.name;
+    data.foto =
+      this.selectedFile instanceof File
+        ? this.selectedFile.name
+        : this.selectedFile;
+    // data.foto = this.selectedFile.name;
     data.especie = this.selectedValue;
     data.cliente = { id: this.idCliente };
 
-    
     if (this.validar(data)) {
       this.dialogRef.close(data);
     }

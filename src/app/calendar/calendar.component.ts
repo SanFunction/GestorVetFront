@@ -13,7 +13,6 @@ import { Cliente } from '../models/cliente.model';
 import { CitaService } from '../services/citas.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'calendar-component',
   templateUrl: './calendar.component.html',
@@ -28,7 +27,6 @@ export class CalendarComponent
   @ViewChild('month') month!: DayPilotMonthComponent;
   @ViewChild('navigator') nav!: DayPilotNavigatorComponent;
 
- 
   comboCliente: any[] = [];
   events: any[] = [];
 
@@ -58,62 +56,59 @@ export class CalendarComponent
   configWeek: DayPilot.CalendarConfig = {
     viewType: 'Week',
     onTimeRangeSelected: async (args) => {
-  
       const form = [
-        {name: "Mascota", id: "mascota"},
-        {name: "Cliente", id: "idCliente", type:"select", options:this.comboCliente}
+        { name: 'Mascota', id: 'mascota' },
+        {
+          name: 'Cliente',
+          id: 'idCliente',
+          type: 'select',
+          options: this.comboCliente,
+        },
       ];
 
       let cita;
 
-      await DayPilot.Modal.form(form).then(data => {
-        if(data.result) {
+      await DayPilot.Modal.form(form).then((data) => {
+        if (data.result) {
           cita = {
             fecha: args.start,
-            id:null,
-            cliente:{id:data.result['idCliente']},
-            anotaciones:data.result['mascota']
-          }
+            id: null,
+            cliente: { id: data.result['idCliente'] },
+            anotaciones: data.result['mascota'],
+          };
 
           this.citaService.create(cita).subscribe(() => {
             this.clienteService.showMessage('Creado con éxito!');
             this.router.navigate(['/cita']);
             window.location.reload();
           });
-
-        }//if
-       
-      });
-    },
-  
-    onEventClick: (args) => {
-      
-      DayPilot.Modal.confirm('Seguro que quieres borrar la cita?').then((value) => {
-        
-        if(value.result === 'OK') {
-
-          this.citaService.delete(args.e.data.id).subscribe(()=>{
-
-            this.citaService.showMessage('Cita creada');
-            this.router.navigate(['/cita']);
-            window.location.reload();
-          });
-
-          // dp.events.remove(args.e);
         }
       });
+    },
 
-    }
+    onEventClick: (args) => {
+      DayPilot.Modal.confirm('Seguro que quieres borrar la cita?').then(
+        (value) => {
+          if (value.result === 'OK') {
+            this.citaService.delete(args.e.data.id).subscribe(() => {
+              this.citaService.showMessage('Cita creada');
+              this.router.navigate(['/cita']);
+              window.location.reload();
+            });
+          }
+        }
+      );
+    },
   };
 
   configMonth: DayPilot.MonthConfig = {};
 
   constructor(
-    private citaService:CitaService,
+    private citaService: CitaService,
     private router: Router,
     private clienteService: ClienteService,
-    private ds: DataService) {
-
+    private ds: DataService
+  ) {
     super();
     this.viewWeek();
   }
@@ -123,22 +118,17 @@ export class CalendarComponent
     this.loadEvents();
   }
 
-  getClientes(){
-
-    this.clienteService.readCombo().subscribe((data)=> {
-
-      this.comboCliente = data.map((cliente)=> {
-
-        return {name:`${cliente.nombre} ${cliente.descripcion}`, id:cliente.id, type:'text'}
-
+  getClientes() {
+    this.clienteService.readCombo().subscribe((data) => {
+      this.comboCliente = data.map((cliente) => {
+        return {
+          name: `${cliente.nombre} ${cliente.descripcion}`,
+          id: cliente.id,
+          type: 'text',
+        };
       });
-
-    }
-    
-
-    );
+    });
   }
-
 
   loadEvents(): void {
     this.events = [];
@@ -160,10 +150,14 @@ export class CalendarComponent
             let dia = cita['fecha']?.substring(8, 10);
             let hora = cita['fecha']?.substring(11, 13);
             let text = cita['anotaciones'];
-            let cliente = `${cita.cliente.nombre} ${cita.cliente.descripcion}`
+            let cliente = `${cita.cliente.nombre} ${cita.cliente.descripcion}`;
 
-            let start = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(hora);
-            let end = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(Number(hora)+1);
+            let start = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(
+              hora
+            );
+            let end = DayPilot.Date.fromYearMonthDay(anio, mes, dia).addHours(
+              Number(hora) + 1
+            );
 
             this.events.push({
               start: start,
@@ -173,11 +167,9 @@ export class CalendarComponent
               text: `Mascota:${text}\n Cliente:${cliente}`,
             });
           });
-
-
         })
       )
-      .subscribe(); // fin servicio
+      .subscribe(); 
   }
 
   viewDay(): void {
@@ -201,8 +193,4 @@ export class CalendarComponent
     this.configMonth.visible = true;
   }
 
-  // let d:any = new Date('2015-03-04T00:00:00.000Z');
-  // console.log(d.getUTCHours()); // Hours
-  // console.log(d.getUTCMinutes());
-  // console.log(d.getUTCSeconds());
 }
